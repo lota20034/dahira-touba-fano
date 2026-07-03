@@ -18,7 +18,7 @@ function initNav(active, transparent=true) {
       <img id="nlogo" src="" alt="Logo">
       <span class="nav-logo-text">Dahira Touba Fano</span>
     </a>
-    <ul class="nav-links">
+    <ul class="nav-links" id="navLinks">
       ${PAGES.map(p=>`
         <li>
           <a href="${p.href}" class="${p.href===active?'active':''}" data-it>${p.it}</a>
@@ -28,7 +28,10 @@ function initNav(active, transparent=true) {
     <div class="lang-btn">
       <button id="btn-it" class="active" onclick="setLang('it')">IT</button>
       <button id="btn-fr" onclick="setLang('fr')">FR</button>
-    </div>`;
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>`;
 
   document.getElementById('nlogo').src = IMGS['logo'];
 
@@ -37,6 +40,23 @@ function initNav(active, transparent=true) {
       nav.classList.toggle('scrolled', window.scrollY>50);
     });
   }
+
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+  toggle.addEventListener('click',()=>{
+    const open = links.classList.toggle('open');
+    toggle.classList.toggle('open', open);
+    nav.classList.toggle('menu-open', open);
+    document.body.classList.toggle('no-scroll', open);
+  });
+  links.querySelectorAll('a').forEach(a=>{
+    a.addEventListener('click',()=>{
+      links.classList.remove('open');
+      toggle.classList.remove('open');
+      nav.classList.remove('menu-open');
+      document.body.classList.remove('no-scroll');
+    });
+  });
 }
 
 function initFooter() {
