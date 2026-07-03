@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dahira Touba Fano | Khadaikhoul Fadha-il</title>
+<meta name="description" content="Dahira Touba Fano - Khadaikhoul Fadha-il: comunità Mouridiyya a Fano, Italia. Incontri ogni sabato a Via dell'Artigianato, Ponte Rio (PU).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.hero{height:100vh;min-height:600px;position:relative;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;transition:opacity 1.5s;}
+.hero-ov{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,24,12,.6),rgba(8,24,12,.45) 50%,rgba(8,24,12,.88));}
+.hero-content{position:relative;z-index:1;max-width:780px;padding:0 1.5rem;}
+.hero-eyebrow{font-size:.68rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold2);font-weight:600;margin-bottom:1.2rem;display:block;}
+.hero h1{font-size:clamp(2.6rem,6.5vw,5rem);color:#fff;line-height:1.02;margin-bottom:1.4rem;}
+.hero h1 em{color:var(--gold);font-style:italic;}
+.hero-sub{color:rgba(255,255,255,.8);font-size:clamp(.95rem,1.8vw,1.1rem);max-width:540px;margin:0 auto 2.4rem;line-height:1.7;}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.4);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:.5rem;}
+.scroll-line{width:1px;height:40px;background:rgba(255,255,255,.3);animation:sl 2s infinite;}
+@keyframes sl{0%{height:0;opacity:1}100%{height:40px;opacity:0}}
+
+/* NUMBERS */
+.numbers{background:var(--green);padding:4rem 5%;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center;}
+.num-item strong{font-family:'Playfair Display',serif;font-size:2.8rem;color:var(--gold);display:block;}
+.num-item span{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.6);}
+
+/* ABOUT STRIP */
+.about-strip{display:grid;grid-template-columns:1fr 1fr;min-height:560px;}
+.about-img{position:relative;overflow:hidden;}
+.about-img img{width:100%;height:100%;object-fit:cover;}
+.about-text{background:var(--cream);padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center;}
+.about-text p{color:var(--grey);line-height:1.8;margin-bottom:1rem;font-size:.96rem;}
+.about-quote{margin-top:1.5rem;border-left:3px solid var(--gold);padding-left:1.2rem;font-family:'Playfair Display',serif;font-style:italic;color:var(--green);font-size:1.05rem;line-height:1.6;}
+
+/* CAROSELLO */
+.carousel-sec{background:var(--green);padding:5rem 0;}
+.carousel-head{padding:0 5%;margin-bottom:2.5rem;}
+.carousel-head .eyebrow{color:var(--gold2);}
+.carousel-head h2{color:#fff;}
+.c-wrap{overflow:hidden;}
+.c-track{display:flex;gap:1rem;padding:0 5%;transition:transform .5s cubic-bezier(.4,0,.2,1);}
+.c-slide{flex:0 0 300px;height:380px;overflow:hidden;position:relative;}
+.c-slide img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
+.c-slide:hover img{transform:scale(1.06);}
+.c-btns{display:flex;gap:.8rem;padding:1.5rem 5% 0;}
+.c-btn{width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.35);background:none;color:#fff;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all .3s;}
+.c-btn:hover{background:var(--gold);border-color:var(--gold);}
+
+/* PROSSIMO EVENTO */
+.next-event{background:var(--cream);padding:5rem 5%;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.event-poster{box-shadow:0 20px 60px rgba(0,0,0,.15);}
+.event-info .eyebrow{color:var(--gold);}
+.event-date-big{font-family:'Playfair Display',serif;font-size:clamp(3rem,6vw,5rem);color:var(--green);line-height:1;margin:.5rem 0 1rem;}
+.program-list{margin-top:1.5rem;border-top:1px solid var(--line);}
+.program-item{display:flex;gap:1.5rem;padding:.9rem 0;border-bottom:1px solid var(--line);font-size:.88rem;}
+.program-time{color:var(--gold);font-weight:600;min-width:50px;}
+.program-name{color:var(--dark);}
+
+/* CITAZIONE HOME */
+.quote-strip{background:var(--green);padding:5rem 5%;text-align:center;}
+.quote-strip blockquote{font-family:'Playfair Display',serif;font-style:italic;color:#fff;font-size:clamp(1.3rem,2.5vw,1.9rem);max-width:700px;margin:0 auto 1rem;line-height:1.5;}
+.quote-strip cite{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold2);}
+
+/* CTA FINALE */
+.cta-row{padding:5rem 5%;display:flex;gap:2rem;justify-content:center;flex-wrap:wrap;background:#fff;}
+.cta-card{border:1px solid var(--line);padding:2.5rem;text-align:center;flex:1;min-width:200px;max-width:260px;transition:all .3s;}
+.cta-card:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.08);}
+.cta-icon{font-size:2rem;margin-bottom:1rem;}
+.cta-card h3{font-size:1rem;color:var(--green);margin-bottom:.5rem;}
+.cta-card p{font-size:.8rem;color:var(--grey);margin-bottom:1.2rem;}
+
+@media(max-width:860px){
+  .numbers{grid-template-columns:repeat(2,1fr);}
+  .about-strip{grid-template-columns:1fr;}
+  .about-img{height:300px;}
+  .next-event{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<nav id="nav" class="nav-transparent"></nav>
+
+<section class="hero" id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-ov"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">Khadaikhoul Fadha-il · Fano, Italia</span>
+    <h1 data-it>Una comunità di <em>fede</em>,<br>lavoro e devozione</h1>
+    <h1 data-fr>Une communauté de <em>foi</em>,<br>de travail et de dévotion</h1>
+    <p class="hero-sub" data-it>Discepoli di Cheikh Ahmadou Bamba riuniti a Fano nel nome del dhikr, della fratellanza e del servizio.</p>
+    <p class="hero-sub" data-fr>Disciples de Cheikh Ahmadou Bamba réunis à Fano au nom du dhikr, de la fraternité et du service.</p>
+    <div class="hero-btns">
+      <a class="btn btn-gold" href="eventi.html" data-it>Prossimi eventi</a>
+      <a class="btn btn-gold" href="eventi.html" data-fr>Prochains événements</a>
+      <a class="btn btn-outline" href="chisiamo.html" data-it>Chi siamo</a>
+      <a class="btn btn-outline" href="chisiamo.html" data-fr>Qui sommes-nous</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div>Scroll</div>
+</section>
+
+<div class="numbers">
+  <div class="num-item"><strong>2019</strong><span data-it>Anno di fondazione</span><span data-fr>Année de fondation</span></div>
+  <div class="num-item"><strong>4</strong><span data-it>Commissioni attive</span><span data-fr>Commissions actives</span></div>
+  <div class="num-item"><strong>Ogni sabato</strong><span data-it>Incontri settimanali</span><span data-fr>Réunions hebdomadaires</span></div>
+  <div class="num-item"><strong>Fano (PU)</strong><span data-it>La nostra città</span><span data-fr>Notre ville</span></div>
+</div>
+
+<div class="about-strip">
+  <div class="about-img"><img id="aboutImg" src="" alt="Comunità"></div>
+  <div class="about-text">
+    <span class="eyebrow" data-it>Chi siamo</span>
+    <span class="eyebrow" data-fr>Qui sommes-nous</span>
+    <h2 class="section-title" data-it>Piccolo dahira,<br>grande cuore</h2>
+    <h2 class="section-title" data-fr>Petit dahira,<br>grand cœur</h2>
+    <div class="divider"></div>
+    <p data-it>Il Dahira Touba Fano nasce dalla volontà di discepoli di Cheikhoul Khadim di riunirsi nella fede, nel dhikr e nella solidarietà, lontano dalla terra natale ma uniti nello spirito.</p>
+    <p data-fr>Le Dahira Touba Fano est né de la volonté de disciples de Cheikhoul Khadim de se réunir dans la foi, le dhikr et la solidarité, loin de la terre natale mais unis dans l'esprit.</p>
+    <div class="about-quote" data-it>"Liggéey mooy jaamu Yàlla. Il lavoro è il culto di Dio."</div>
+    <div class="about-quote" data-fr>"Liggéey mooy jaamu Yàlla. Le travail est le culte de Dieu."</div>
+    <a href="chisiamo.html" class="btn btn-dark" style="margin-top:2rem;align-self:flex-start" data-it>Scopri la storia</a>
+    <a href="chisiamo.html" class="btn btn-dark" style="margin-top:2rem;align-self:flex-start" data-fr>Découvrir l'histoire</a>
+  </div>
+</div>
+
+<!-- CAROSELLO -->
+<section class="carousel-sec">
+  <div class="carousel-head">
+    <span class="eyebrow" data-it>La nostra comunità</span>
+    <span class="eyebrow" data-fr>Notre communauté</span>
+    <h2 data-it>Momenti che ci uniscono</h2>
+    <h2 data-fr>Moments qui nous unissent</h2>
+  </div>
+  <div class="c-wrap">
+    <div class="c-track" id="cTrack"></div>
+  </div>
+  <div class="c-btns">
+    <button class="c-btn" id="cPrev">&#8592;</button>
+    <button class="c-btn" id="cNext">&#8594;</button>
+  </div>
+</section>
+
+<!-- PROSSIMO EVENTO -->
+<section class="next-event">
+  <img id="eventPoster" src="" alt="Prossimo evento" class="event-poster">
+  <div class="event-info">
+    <span class="eyebrow" data-it>Prossimo grande evento</span>
+    <span class="eyebrow" data-fr>Prochain grand événement</span>
+    <div class="event-date-big">29 AGO</div>
+    <h2 class="section-title">Magal Touba 2026</h2>
+    <p style="color:var(--grey);font-size:.9rem;margin-bottom:1rem" data-it>Commemorazione dell'esilio di Cheikh Ahmadou Bamba — il giorno più importante della Mouridiyya, celebrato insieme a Fano.</p>
+    <p style="color:var(--grey);font-size:.9rem;margin-bottom:1rem" data-fr>Commémoration de l'exil de Cheikh Ahmadou Bamba — le jour le plus important de la Mouridiyya, célébré ensemble à Fano.</p>
+    <a href="eventi.html" class="btn btn-dark" data-it>Vedi tutti gli eventi</a>
+    <a href="eventi.html" class="btn btn-dark" data-fr>Voir tous les événements</a>
+  </div>
+</section>
+
+<!-- CITAZIONE -->
+<div class="quote-strip">
+  <blockquote>"Bul tiit dara, tiit rekk Yàlla. Ku tiit Yàlla, dara du ko tiit."</blockquote>
+  <cite>— Mame Cheikh Ibrahima Fall · <a href="citazioni.html" style="color:var(--gold);text-decoration:underline" data-it>Leggi tutte le citazioni</a><a href="citazioni.html" style="color:var(--gold);text-decoration:underline" data-fr>Lire toutes les citations</a></cite>
+</div>
+
+<!-- CTA -->
+<div class="cta-row">
+  <a href="galleria.html" class="cta-card">
+    <div class="cta-icon">📸</div>
+    <h3 data-it>Galleria</h3><h3 data-fr>Galerie</h3>
+    <p data-it>Le foto dei nostri momenti più belli</p><p data-fr>Les photos de nos plus beaux moments</p>
+    <span class="btn btn-dark" data-it>Esplora</span><span class="btn btn-dark" data-fr>Explorer</span>
+  </a>
+  <a href="citazioni.html" class="cta-card">
+    <div class="cta-icon">🌿</div>
+    <h3>Kàddu</h3>
+    <p data-it>Citazioni di Mame Cheikh Ibrahima Fall</p><p data-fr>Citations de Mame Cheikh Ibrahima Fall</p>
+    <span class="btn btn-dark" data-it>Leggi</span><span class="btn btn-dark" data-fr>Lire</span>
+  </a>
+  <a href="social.html" class="cta-card">
+    <div class="cta-icon">📺</div>
+    <h3 data-it>Video & Social</h3><h3 data-fr>Vidéos & Réseaux</h3>
+    <p data-it>YouTube, TikTok, Instagram del Dahira</p><p data-fr>YouTube, TikTok, Instagram du Dahira</p>
+    <span class="btn btn-dark" data-it>Segui</span><span class="btn btn-dark" data-fr>Suivre</span>
+  </a>
+  <a href="contatti.html" class="cta-card">
+    <div class="cta-icon">📍</div>
+    <h3 data-it>Contatti</h3><h3 data-fr>Contact</h3>
+    <p data-it>Vieni a trovarci ogni sabato a Fano</p><p data-fr>Rejoignez-nous chaque samedi à Fano</p>
+    <span class="btn btn-dark" data-it>Come arrivare</span><span class="btn btn-dark" data-fr>Comment venir</span>
+  </a>
+</div>
+
+<footer id="footer"></footer>
+<script src="imgs.js"></script>
+<script src="common.js"></script>
+<script>
+// Hero bg slideshow
+const heroBgs = ['studio5','group1','studio2','layla1'];
+let hIdx=0;
+const heroBg = document.getElementById('heroBg');
+function setHero(){heroBg.style.backgroundImage=`url(${IMGS[heroBgs[hIdx]]})`;}
+setHero();
+setInterval(()=>{hIdx=(hIdx+1)%heroBgs.length;setHero();},5000);
+
+document.getElementById('aboutImg').src = IMGS['studio1'];
+document.getElementById('eventPoster').src = IMGS['magal'];
+
+// Carosello
+const slides = ['studio1','studio2','studio3','studio4','studio5','june2_1','june2_2','june2_3','june2_4','june2_5','june1_1','june1_2','group1','sokhna1','portrait1'];
+const track = document.getElementById('cTrack');
+slides.forEach(k=>{
+  const d=document.createElement('div');d.className='c-slide';
+  const img=document.createElement('img');img.src=IMGS[k];img.alt='';
+  d.appendChild(img);track.appendChild(d);
+});
+let cIdx=0;
+const slideW=300+16;
+function moveC(dir){
+  cIdx=Math.max(0,Math.min(cIdx+dir,slides.length-4));
+  track.style.transform=`translateX(-${cIdx*slideW}px)`;
+}
+document.getElementById('cNext').onclick=()=>moveC(1);
+document.getElementById('cPrev').onclick=()=>moveC(-1);
+setInterval(()=>moveC(cIdx>=slides.length-4?-(slides.length-4):1),3500);
+
+initNav('index.html');
+initFooter();
+initLang();
+</script>
+</body>
+</html>

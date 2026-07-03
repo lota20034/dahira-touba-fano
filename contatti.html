@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contatti | Dahira Touba Fano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.contact-body{display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:600px;}
+.contact-left{background:var(--green);padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center;}
+.contact-left .eyebrow{color:var(--gold2);}
+.contact-left h2{color:#fff;font-size:clamp(1.8rem,3vw,2.5rem);margin-bottom:1rem;}
+.contact-left .divider{background:var(--gold);}
+.c-item{margin-bottom:1.8rem;}
+.c-item .eyebrow{color:var(--gold2);margin-bottom:.3rem;}
+.c-item p{color:rgba(255,255,255,.8);font-size:.92rem;line-height:1.6;}
+.c-item a{color:var(--gold2);text-decoration:underline;}
+.contact-right{background:var(--cream);padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center;}
+.contact-right h2{color:var(--green);font-size:clamp(1.6rem,2.8vw,2.2rem);margin-bottom:.5rem;}
+form{display:flex;flex-direction:column;gap:1.2rem;margin-top:1.5rem;}
+form input,form textarea,form select{background:transparent;border:none;border-bottom:1px solid var(--line);padding:.8rem .2rem;font-family:'Inter',sans-serif;font-size:.93rem;color:var(--dark);width:100%;}
+form input:focus,form textarea:focus{outline:none;border-bottom-color:var(--gold);}
+form button{align-self:flex-start;margin-top:.5rem;}
+@media(max-width:860px){.contact-body{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav id="nav"></nav>
+<div style="height:84px"></div>
+
+<div class="page-hero">
+  <div class="page-hero-bg" id="heroImg"></div>
+  <div class="page-hero-ov"></div>
+  <div class="page-hero-content">
+    <span class="eyebrow" data-it>Scrivici</span>
+    <span class="eyebrow" data-fr>Écrivez-nous</span>
+    <h1 data-it>Contatti</h1>
+    <h1 data-fr>Contact</h1>
+  </div>
+</div>
+
+<div class="contact-body">
+  <div class="contact-left">
+    <span class="eyebrow" data-it>Dove siamo</span>
+    <span class="eyebrow" data-fr>Où nous trouvons</span>
+    <h2 data-it>Vieni a trovarci</h2>
+    <h2 data-fr>Rejoignez-nous</h2>
+    <div class="divider"></div>
+    <div class="c-item">
+      <span class="eyebrow" data-it>Indirizzo</span>
+      <span class="eyebrow" data-fr>Adresse</span>
+      <p>Via dell'Artigianato<br>Ponte Rio (PU), Italia<br>Keur Serigne Touba Fano</p>
+    </div>
+    <div class="c-item">
+      <span class="eyebrow" data-it>Quando</span>
+      <span class="eyebrow" data-fr>Quand</span>
+      <p data-it>Ogni sabato dalle ore 15:00</p>
+      <p data-fr>Chaque samedi à partir de 15h00</p>
+    </div>
+    <div class="c-item">
+      <span class="eyebrow">Instagram</span>
+      <p><a href="https://instagram.com/dahira_touba_fano_" target="_blank">@dahira_touba_fano_</a><br><a href="https://instagram.com/daray.toubafano" target="_blank">@daray.toubafano</a></p>
+    </div>
+    <div class="c-item">
+      <span class="eyebrow">TikTok</span>
+      <p><a href="https://tiktok.com/@dahiratoubafano" target="_blank">@dahiratoubafano</a><br><a href="https://tiktok.com/@kourel.touba.fano" target="_blank">@kourel.touba.fano</a></p>
+    </div>
+    <a href="https://maps.google.com/?q=Via+dell'Artigianato+Ponte+Rio+PU" target="_blank" class="btn btn-gold" style="margin-top:1rem;align-self:flex-start" data-it>Apri su Maps</a>
+    <a href="https://maps.google.com/?q=Via+dell'Artigianato+Ponte+Rio+PU" target="_blank" class="btn btn-gold" style="margin-top:1rem;align-self:flex-start" data-fr>Ouvrir sur Maps</a>
+  </div>
+
+  <div class="contact-right">
+    <span class="eyebrow" data-it>Scrivici</span>
+    <span class="eyebrow" data-fr>Écrivez-nous</span>
+    <h2 data-it>Manda un messaggio</h2>
+    <h2 data-fr>Envoyez un message</h2>
+    <form onsubmit="event.preventDefault();alert('Messaggio inviato! / Message envoyé! ✅');">
+      <input type="text" placeholder="Nome / Nom" required>
+      <input type="email" placeholder="Email" required>
+      <input type="text" placeholder="Oggetto / Objet">
+      <textarea rows="5" placeholder="Messaggio / Message" required></textarea>
+      <button class="btn btn-dark" type="submit" data-it>Invia messaggio</button>
+      <button class="btn btn-dark" type="submit" data-fr>Envoyer</button>
+    </form>
+  </div>
+</div>
+
+<footer id="footer"></footer>
+<script src="imgs.js"></script><script src="common.js"></script>
+<script>
+document.getElementById('heroImg').style.backgroundImage=`url(${IMGS['studio3']})`;
+initNav('contatti.html',false);initFooter();initLang();
+</script>
+</body></html>

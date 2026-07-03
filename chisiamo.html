@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chi siamo | Dahira Touba Fano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.bio-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;min-height:580px;}
+.bio-img{position:relative;overflow:hidden;}
+.bio-img img{width:100%;height:100%;object-fit:cover;}
+.bio-text{background:var(--cream);padding:5rem 4rem;display:flex;flex-direction:column;justify-content:center;}
+.bio-text p{color:var(--grey);line-height:1.85;margin-bottom:1rem;font-size:.95rem;}
+.bio-text h2{font-size:clamp(1.6rem,2.8vw,2.3rem);color:var(--green);margin-bottom:.5rem;}
+
+.comm-intro{padding:6rem 5% 2rem;}
+.comm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:0 5% 6rem;}
+.comm-card{background:#fff;padding:2.2rem 1.6rem;}
+.comm-num{font-family:'Playfair Display',serif;font-style:italic;color:var(--gold);font-size:1.2rem;}
+.comm-card h3{font-size:.98rem;color:var(--green);margin:.7rem 0 .5rem;}
+.comm-card p{font-size:.82rem;color:var(--grey);line-height:1.65;}
+
+.program-sec{background:var(--green);padding:5rem 5%;}
+.program-sec .eyebrow{color:var(--gold2);}
+.program-sec h2{color:#fff;margin-bottom:2rem;}
+.program-row{display:flex;gap:2rem;padding:1.1rem 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:.9rem;}
+.p-time{color:var(--gold);font-weight:600;min-width:60px;}
+.p-name{color:rgba(255,255,255,.85);}
+
+@media(max-width:860px){.bio-grid{grid-template-columns:1fr;}.bio-img{height:300px;}.comm-grid{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+<nav id="nav"></nav>
+<div style="height:84px"></div>
+
+<div class="page-hero">
+  <div class="page-hero-bg" id="heroImg"></div>
+  <div class="page-hero-ov"></div>
+  <div class="page-hero-content">
+    <span class="eyebrow" data-it>Khadaikhoul Fadha-il</span>
+    <span class="eyebrow" data-fr>Khadaikhoul Fadha-il</span>
+    <h1 data-it>Chi siamo</h1>
+    <h1 data-fr>Qui sommes-nous</h1>
+  </div>
+</div>
+
+<div class="bio-grid">
+  <div class="bio-img"><img id="bioImg1" src="" alt="Comunità"></div>
+  <div class="bio-text">
+    <span class="eyebrow" data-it>La nostra storia</span>
+    <span class="eyebrow" data-fr>Notre histoire</span>
+    <h2 data-it>Dahira Touba Fano</h2>
+    <h2 data-fr>Dahira Touba Fano</h2>
+    <div class="divider"></div>
+    <p data-it>Il Dahira Touba Fano nasce dal desiderio di una comunità di discepoli di Cheikh Ahmadou Bamba di riunirsi nella fede, nel dhikr e nella solidarietà, lontano dalla terra natale ma uniti nello spirito della Mouridiyya.</p>
+    <p data-fr>Le Dahira Touba Fano est né du désir d'une communauté de disciples de Cheikh Ahmadou Bamba de se réunir dans la foi, le dhikr et la solidarité, loin de la terre natale mais unis dans l'esprit de la Mouridiyya.</p>
+    <p data-it>Siamo un piccolo dahira, ma con un grande cuore. Ogni sabato ci riuniamo a Via dell'Artigianato, Ponte Rio (PU), per pregare, studiare il Corano e le Xassida, e rafforzare i legami di fratellanza.</p>
+    <p data-fr>Nous sommes un petit dahira, mais avec un grand cœur. Chaque samedi nous nous réunissons Via dell'Artigianato, Ponte Rio (PU), pour prier, étudier le Coran et les Xassida, et renforcer les liens de fraternité.</p>
+  </div>
+</div>
+
+<div class="bio-grid" style="direction:rtl">
+  <div class="bio-img"><img id="bioImg2" src="" alt="Missione" style="direction:ltr"></div>
+  <div class="bio-text" style="direction:ltr">
+    <span class="eyebrow" data-it>La nostra missione</span>
+    <span class="eyebrow" data-fr>Notre mission</span>
+    <h2 data-it>Fede, lavoro e servizio</h2>
+    <h2 data-fr>Foi, travail et service</h2>
+    <div class="divider"></div>
+    <p data-it>Seguiamo l'insegnamento del Khadaikhoul Fadha-il: il lavoro come forma di adorazione, la disciplina come via verso Dio, la solidarietà come dovere verso il prossimo.</p>
+    <p data-fr>Nous suivons l'enseignement du Khadaikhoul Fadha-il : le travail comme forme d'adoration, la discipline comme voie vers Dieu, la solidarité comme devoir envers le prochain.</p>
+    <p data-it>Organizziamo eventi religiosi, incontri di formazione, e sosteniamo i membri della comunità nei momenti di difficoltà, fedeli al ndiguel dei nostri guide spirituali.</p>
+    <p data-fr>Nous organisons des événements religieux, des réunions de formation, et soutenons les membres de la communauté dans les moments difficiles, fidèles au ndiguel de nos guides spirituels.</p>
+  </div>
+</div>
+
+<div class="comm-intro">
+  <span class="eyebrow" data-it>Organizzazione</span>
+  <span class="eyebrow" data-fr>Organisation</span>
+  <h2 class="section-title" data-it>Le nostre commissioni</h2>
+  <h2 class="section-title" data-fr>Nos commissions</h2>
+</div>
+<div class="comm-grid">
+  <div class="comm-card"><div class="comm-num">01</div><h3 data-it>Commissione Audiovisiva</h3><h3 data-fr>Commission Audiovisuelle</h3><p data-it>Documenta e trasmette gli eventi religiosi del Dahira, gestisce i social e preserva la memoria della comunità.</p><p data-fr>Documente et diffuse les événements religieux du Dahira, gère les réseaux sociaux et préserve la mémoire de la communauté.</p></div>
+  <div class="comm-card"><div class="comm-num">02</div><h3 data-it>Commissione Cucina</h3><h3 data-fr>Commission Cuisine</h3><p data-it>Gestita dalle Sokhna, si occupa della ristorazione e accoglienza durante gli incontri e gli eventi religiosi.</p><p data-fr>Gérée par les Sokhna, elle assure la restauration et l'accueil lors des réunions et événements religieux.</p></div>
+  <div class="comm-card"><div class="comm-num">03</div><h3 data-it>Commissione Sociale</h3><h3 data-fr>Commission Sociale</h3><p data-it>Offre ascolto, sostegno e accompagnamento ai membri della comunità nei momenti difficili.</p><p data-fr>Offre écoute, soutien et accompagnement aux membres de la communauté dans les moments difficiles.</p></div>
+  <div class="comm-card"><div class="comm-num">04</div><h3 data-it>Commissione Eventi</h3><h3 data-fr>Commission Événements</h3><p data-it>Organizza gli incontri settimanali, le veglie e le grandi ricorrenze religiose della comunità.</p><p data-fr>Organise les réunions hebdomadaires, les veillées et les grandes occasions religieuses de la communauté.</p></div>
+</div>
+
+<div class="program-sec">
+  <span class="eyebrow" data-it>Ogni sabato</span>
+  <span class="eyebrow" data-fr>Chaque samedi</span>
+  <h2 data-it>Programma degli incontri</h2>
+  <h2 data-fr>Programme des réunions</h2>
+  <div class="program-row"><span class="p-time">15:00</span><span class="p-name">Al Quran Ak Durus</span></div>
+  <div class="program-row"><span class="p-time">16:15</span><span class="p-name">Kourèl Xassida</span></div>
+  <div class="program-row"><span class="p-time">17:15</span><span class="p-name">Takusàn</span></div>
+  <div class="program-row"><span class="p-time">17:30</span><span class="p-name">Kourèl Zikroulah</span></div>
+  <div class="program-row" style="border:none"><span class="p-time">18:15</span><span class="p-name">Waxtàne Ak Sognè</span></div>
+  <br>
+  <p style="color:rgba(255,255,255,.6);font-size:.82rem" data-it>📍 Via dell'Artigianato, Ponte Rio (PU) — Ogni sabato dalle 15:00</p>
+  <p style="color:rgba(255,255,255,.6);font-size:.82rem" data-fr>📍 Via dell'Artigianato, Ponte Rio (PU) — Chaque samedi à partir de 15h00</p>
+</div>
+
+<footer id="footer"></footer>
+<script src="imgs.js"></script><script src="common.js"></script>
+<script>
+document.getElementById('heroImg').style.backgroundImage=`url(${IMGS['studio5']})`;
+document.getElementById('bioImg1').src=IMGS['studio2'];
+document.getElementById('bioImg2').src=IMGS['studio4'];
+initNav('chisiamo.html',false);initFooter();initLang();
+</script>
+</body></html>

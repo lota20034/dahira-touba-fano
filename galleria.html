@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Galleria | Dahira Touba Fano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.gallery-intro{padding:4rem 5% 3rem;}
+.masonry{columns:3;gap:1rem;padding:0 5% 5rem;}
+.masonry-item{break-inside:avoid;margin-bottom:1rem;overflow:hidden;position:relative;cursor:pointer;}
+.masonry-item img{width:100%;display:block;transition:transform .5s;}
+.masonry-item:hover img{transform:scale(1.04);}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:999;display:none;align-items:center;justify-content:center;}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;}
+.lb-close{position:absolute;top:1.5rem;right:1.5rem;color:#fff;font-size:2rem;cursor:pointer;background:none;border:none;}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;padding:1rem;}
+.lb-prev{left:1rem;}.lb-next{right:1rem;}
+@media(max-width:860px){.masonry{columns:2;}}
+@media(max-width:500px){.masonry{columns:1;}}
+</style>
+</head>
+<body>
+<nav id="nav"></nav>
+<div style="height:84px"></div>
+
+<div class="page-hero">
+  <div class="page-hero-bg" id="heroImg"></div>
+  <div class="page-hero-ov"></div>
+  <div class="page-hero-content">
+    <span class="eyebrow" data-it>I nostri momenti</span>
+    <span class="eyebrow" data-fr>Nos moments</span>
+    <h1 data-it>Galleria</h1>
+    <h1 data-fr>Galerie</h1>
+  </div>
+</div>
+
+<div class="gallery-intro">
+  <span class="eyebrow" data-it>Foto della comunità</span>
+  <span class="eyebrow" data-fr>Photos de la communauté</span>
+  <h2 class="section-title" data-it>Momenti che ci uniscono</h2>
+  <h2 class="section-title" data-fr>Moments qui nous unissent</h2>
+</div>
+
+<div class="masonry" id="masonry"></div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <button class="lb-nav lb-prev" onclick="navLb(-1)">‹</button>
+  <img id="lbImg" src="" alt="">
+  <button class="lb-nav lb-next" onclick="navLb(1)">›</button>
+</div>
+
+<footer id="footer"></footer>
+<script src="imgs.js"></script><script src="common.js"></script>
+<script>
+const galleryKeys=['studio1','studio2','studio3','studio4','studio5','june2_1','june2_2','june2_3','june2_4','june2_5','june2_6','june2_7','june2_8','june2_9','june2_10','june2_11','june2_12','june2_13','june2_14','june2_15','june2_16','june1_1','june1_2','june1_3','june1_4','june1_5','june1_6','june1_7','june1_8','group1','sokhna1','portrait1','layla1','camp1','event1'];
+const masonry=document.getElementById('masonry');
+let currentIdx=0;
+galleryKeys.forEach((k,i)=>{
+  if(!IMGS[k])return;
+  const d=document.createElement('div');d.className='masonry-item';
+  const img=document.createElement('img');img.src=IMGS[k];img.alt='';
+  img.onclick=()=>openLb(i);
+  d.appendChild(img);masonry.appendChild(d);
+});
+document.getElementById('heroImg').style.backgroundImage=`url(${IMGS['june2_6']})`;
+function openLb(i){currentIdx=i;document.getElementById('lbImg').src=IMGS[galleryKeys[i]];document.getElementById('lightbox').classList.add('open');}
+function closeLb(){document.getElementById('lightbox').classList.remove('open');}
+function navLb(dir){currentIdx=(currentIdx+dir+galleryKeys.length)%galleryKeys.length;document.getElementById('lbImg').src=IMGS[galleryKeys[currentIdx]];}
+document.getElementById('lightbox').onclick=function(e){if(e.target===this)closeLb();}
+initNav('galleria.html',false);initFooter();initLang();
+</script>
+</body></html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Eventi | Dahira Touba Fano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.events-list{padding:5rem 5%;}
+.event-row{display:grid;grid-template-columns:110px 1fr auto;gap:2rem;align-items:center;padding:1.8rem 0;border-bottom:1px solid var(--line);}
+.event-row:first-child{border-top:1px solid var(--line);}
+.ev-date{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.1rem;line-height:1.2;}
+.ev-date small{display:block;font-family:'Inter',sans-serif;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);}
+.ev-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--green);margin-bottom:.3rem;}
+.ev-desc{font-size:.83rem;color:var(--grey);line-height:1.6;}
+.ev-badge{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;border:1px solid var(--gold);color:var(--gold);padding:.3rem .8rem;border-radius:20px;white-space:nowrap;}
+
+.archive-sec{background:var(--cream);padding:5rem 5%;}
+.archive-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem;}
+.archive-card{background:#fff;border:1px solid var(--line);overflow:hidden;transition:all .3s;}
+.archive-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.1);}
+.archive-card img{width:100%;height:320px;object-fit:cover;object-position:top;}
+.archive-card-label{padding:1rem 1.2rem;font-size:.82rem;color:var(--grey);}
+.archive-card-label strong{display:block;color:var(--green);font-size:.92rem;margin-bottom:.2rem;}
+
+.weekly-sec{background:var(--green);padding:5rem 5%;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.weekly-sec h2{color:#fff;}
+.weekly-sec .eyebrow{color:var(--gold2);}
+.weekly-sec p{color:rgba(255,255,255,.75);line-height:1.7;margin-bottom:1rem;font-size:.93rem;}
+.map-placeholder{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:3rem 2rem;text-align:center;color:rgba(255,255,255,.5);font-size:.85rem;}
+@media(max-width:860px){.event-row{grid-template-columns:1fr;gap:.5rem;}.ev-badge{display:none;}.archive-grid{grid-template-columns:1fr 1fr;}.weekly-sec{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<nav id="nav"></nav>
+<div style="height:84px"></div>
+
+<div class="page-hero">
+  <div class="page-hero-bg" id="heroImg"></div>
+  <div class="page-hero-ov"></div>
+  <div class="page-hero-content">
+    <span class="eyebrow" data-it>Calendario 2026</span>
+    <span class="eyebrow" data-fr>Calendrier 2026</span>
+    <h1 data-it>Eventi & Incontri</h1>
+    <h1 data-fr>Événements & Rencontres</h1>
+  </div>
+</div>
+
+<div class="events-list">
+  <span class="eyebrow" data-it>Prossimi appuntamenti</span>
+  <span class="eyebrow" data-fr>Prochains rendez-vous</span>
+  <h2 class="section-title" data-it>Agenda del Dahira</h2>
+  <h2 class="section-title" data-fr>Agenda du Dahira</h2>
+  <div class="divider"></div>
+
+  <div class="event-row">
+    <div class="ev-date">29<small data-it>Agosto 2026</small><small data-fr>Août 2026</small></div>
+    <div><div class="ev-title">Magal Touba 2026</div><div class="ev-desc" data-it>Commemorazione dell'esilio di Cheikh Ahmadou Bamba — il giorno più importante della Mouridiyya. Celebrazione comunitaria a Fano.</div><div class="ev-desc" data-fr>Commémoration de l'exil de Cheikh Ahmadou Bamba — le jour le plus important de la Mouridiyya. Célébration communautaire à Fano.</div></div>
+    <span class="ev-badge" data-it>Grande evento</span><span class="ev-badge" data-fr>Grand événement</span>
+  </div>
+
+  <div class="event-row">
+    <div class="ev-date"><small data-it>Ogni venerdì</small><small data-fr>Chaque vendredi</small></div>
+    <div><div class="ev-title">Yobalu Aljuma</div><div class="ev-desc" data-it>Lettura della Surah Al-Kahf ogni venerdì mattina — pratica settimanale della comunità.</div><div class="ev-desc" data-fr>Lecture de la Sourate Al-Kahf chaque vendredi matin — pratique hebdomadaire de la communauté.</div></div>
+    <span class="ev-badge" data-it>Settimanale</span><span class="ev-badge" data-fr>Hebdomadaire</span>
+  </div>
+
+  <div class="event-row">
+    <div class="ev-date"><small data-it>Ogni sabato · 15:00</small><small data-fr>Chaque samedi · 15h</small></div>
+    <div><div class="ev-title" data-it>Dahira Generale</div><div class="ev-title" data-fr>Dahira Général</div><div class="ev-desc" data-it>Al Quran Ak Durus · Kourèl Xassida · Takusàn · Kourèl Zikroulah · Waxtàne Ak Sognè — Via dell'Artigianato, Ponte Rio (PU)</div><div class="ev-desc" data-fr>Al Quran Ak Durus · Kourèl Xassida · Takusàn · Kourèl Zikroulah · Waxtàne Ak Sognè — Via dell'Artigianato, Ponte Rio (PU)</div></div>
+    <span class="ev-badge" data-it>Ricorrente</span><span class="ev-badge" data-fr>Récurrent</span>
+  </div>
+</div>
+
+<!-- ARCHIVIO LOCANDINE -->
+<div class="archive-sec">
+  <span class="eyebrow" data-it>Archivio</span>
+  <span class="eyebrow" data-fr>Archives</span>
+  <h2 class="section-title" data-it>Eventi passati</h2>
+  <h2 class="section-title" data-fr>Événements passés</h2>
+  <div class="archive-grid" id="archiveGrid"></div>
+</div>
+
+<!-- DOVE SIAMO -->
+<div class="weekly-sec">
+  <div>
+    <span class="eyebrow" data-it>Ogni sabato</span>
+    <span class="eyebrow" data-fr>Chaque samedi</span>
+    <h2 class="section-title" style="color:#fff" data-it>Vieni a trovarci</h2>
+    <h2 class="section-title" style="color:#fff" data-fr>Rejoignez-nous</h2>
+    <div class="divider"></div>
+    <p data-it>Gli incontri si svolgono ogni sabato a partire dalle ore 15:00. Tutti sono benvenuti — portate il vostro cuore aperto e la voglia di stare insieme nella fede.</p>
+    <p data-fr>Les réunions se tiennent chaque samedi à partir de 15h00. Tous sont les bienvenus — apportez votre cœur ouvert et l'envie d'être ensemble dans la foi.</p>
+    <p style="color:rgba(255,255,255,.75);font-size:.88rem">📍 Via dell'Artigianato, Ponte Rio (PU), Italia</p>
+    <br>
+    <a href="https://maps.google.com/?q=Via+dell'Artigianato+Ponte+Rio+PU" target="_blank" class="btn btn-gold" data-it>Apri su Google Maps</a>
+    <a href="https://maps.google.com/?q=Via+dell'Artigianato+Ponte+Rio+PU" target="_blank" class="btn btn-gold" data-fr>Ouvrir sur Google Maps</a>
+  </div>
+  <div class="map-placeholder" data-it>📍 Via dell'Artigianato<br>Ponte Rio (PU)<br><br>Keur Serigne Touba Fano</div>
+  <div class="map-placeholder" data-fr>📍 Via dell'Artigianato<br>Ponte Rio (PU)<br><br>Keur Serigne Touba Fano</div>
+</div>
+
+<footer id="footer"></footer>
+<script src="imgs.js"></script><script src="common.js"></script>
+<script>
+document.getElementById('heroImg').style.backgroundImage=`url(${IMGS['june2_3']})`;
+// Archivio locandine
+const locs=[
+  {key:'loc1',label:'Dahira Generale — 25 Aprile 2026'},
+  {key:'loc2',label:'Dahira Generale con S. Mamour Ndao'},
+  {key:'loc3',label:'Assemblea Generale — 2 Maggio 2026'},
+  {key:'loc4',label:'Preghiera Eid — 27 Maggio 2026'},
+  {key:'loc5',label:'Yobalu Aljuma'},
+  {key:'loc6',label:'Ngontoum Xassida — 13 Giugno 2026'},
+  {key:'loc7',label:'Ngontoum Xassida con S. Mandack Gakou'},
+];
+const grid=document.getElementById('archiveGrid');
+locs.forEach(l=>{
+  grid.innerHTML+=`<div class="archive-card"><img src="${IMGS[l.key]}" alt="${l.label}"><div class="archive-card-label"><strong>${l.label}</strong></div></div>`;
+});
+initNav('eventi.html',false);initFooter();initLang();
+</script>
+</body></html>

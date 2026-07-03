@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Citazioni | Dahira Touba Fano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+.quotes-intro{padding:4rem 5% 2rem;}
+.quotes-masonry{columns:2;gap:1.5rem;padding:0 5% 6rem;}
+.q-card{break-inside:avoid;margin-bottom:1.5rem;border:1px solid var(--line);padding:2.5rem 2rem;position:relative;background:#fff;transition:all .3s;}
+.q-card:hover{border-color:var(--gold);box-shadow:0 8px 30px rgba(0,0,0,.07);}
+.q-card::before{content:'"';position:absolute;top:-1.2rem;left:1.5rem;font-family:'Playfair Display',serif;font-size:5rem;color:var(--gold);opacity:.25;line-height:1;}
+.q-wolof{font-family:'Playfair Display',serif;font-style:italic;color:var(--green);font-size:1.05rem;line-height:1.6;margin-bottom:1rem;}
+.q-trans{font-size:.83rem;color:var(--grey);line-height:1.7;border-top:1px solid var(--line);padding-top:.8rem;margin-bottom:1rem;}
+.q-share{display:flex;align-items:center;gap:.5rem;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:none;border:none;cursor:pointer;padding:0;}
+.q-share:hover{color:var(--green);}
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;padding:.8rem 1.6rem;font-size:.82rem;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;border-radius:2px;}
+.toast.show{opacity:1;}
+@media(max-width:700px){.quotes-masonry{columns:1;}}
+</style>
+</head>
+<body>
+<nav id="nav"></nav>
+<div style="height:84px"></div>
+
+<div class="page-hero">
+  <div class="page-hero-bg" id="heroImg"></div>
+  <div class="page-hero-ov"></div>
+  <div class="page-hero-content">
+    <span class="eyebrow">Mame Cheikh Ibrahima Fall</span>
+    <h1 data-it>Kàddu — Parole di saggezza</h1>
+    <h1 data-fr>Kàddu — Paroles de sagesse</h1>
+  </div>
+</div>
+
+<div class="quotes-intro">
+  <span class="eyebrow" data-it>Insegnamenti</span>
+  <span class="eyebrow" data-fr>Enseignements</span>
+  <h2 class="section-title" data-it>Le parole di Mame Cheikh Ibrahima Fall</h2>
+  <h2 class="section-title" data-fr>Les paroles de Mame Cheikh Ibrahima Fall</h2>
+  <div class="divider"></div>
+  <p class="section-sub" data-it>Condividi queste parole di saggezza con chi ami — tocca il pulsante ↗ per condividere sui tuoi social.</p>
+  <p class="section-sub" data-fr>Partagez ces paroles de sagesse avec ceux que vous aimez — touchez le bouton ↗ pour partager sur vos réseaux.</p>
+</div>
+
+<div class="quotes-masonry" id="quotesGrid"></div>
+<div class="toast" id="toast" data-it>Citazione copiata! Condividila 🌿</div>
+<div class="toast" id="toast" data-fr>Citation copiée ! Partagez-la 🌿</div>
+
+<footer id="footer"></footer>
+<script src="imgs.js"></script><script src="common.js"></script>
+<script>
+document.getElementById('heroImg').style.backgroundImage=`url(${IMGS['layla1']})`;
+const quotes=[
+  {w:'"Bu ngay dem ak Yàlla, dem ak dëkk bi ak dëkk bi, te du ko am ku nekk."',it:'Quando cammini con Dio, cammini con il mondo intero — e nessuno ti manca.',fr:'Quand tu marches avec Dieu, tu marches avec le monde entier — et personne ne te manque.'},
+  {w:'"Liggéey mooy jaamu Yàlla. Ku liggéey ñeppam du fax."',it:'Il lavoro è il culto di Dio. Chi lavora con tutto sé stesso non sarà mai deluso.',fr:'Le travail est le culte de Dieu. Celui qui travaille de tout son être ne sera jamais déçu.'},
+  {w:'"Bul tiit dara, tiit rekk Yàlla. Ku tiit Yàlla, dara du ko tiit."',it:'Non temere nulla, temi solo Dio. Chi teme Dio, niente può temerlo.',fr:'Ne crains rien, crains seulement Dieu. Celui qui craint Dieu, rien ne peut lui faire peur.'},
+  {w:'"Ku sant Yàlla ci kanam bu réy, Yàlla bëggna ko ci kanam bu réy."',it:'Chi ringrazia Dio con grande sincerità, Dio lo ricompensa con grande abbondanza.',fr:'Celui qui remercie Dieu avec une grande sincérité, Dieu le récompense avec une grande abondance.'},
+  {w:'"Njëkk sa bopp ci Yàlla, te nit ñi di xam nga nekk fii."',it:'Metti prima il tuo cuore davanti a Dio — e gli uomini sapranno chi sei.',fr:'Mets d\'abord ton cœur devant Dieu — et les hommes sauront qui tu es.'},
+  {w:'"Serigne bi mooy ak jaamu mu neex. Ku am Serigne du am yoon bu dakk."',it:'La guida spirituale è la pace più dolce. Chi ha un Serigne non perde mai la strada.',fr:'Le guide spirituel est la plus douce des paix. Celui qui a un Serigne ne perd jamais son chemin.'},
+  {w:'"Ku def jëf bu baax ci Yàlla, Yàlla du ko jàpp."',it:'Chi compie una buona azione per Dio, Dio non lo deluderà mai.',fr:'Celui qui accomplit une bonne action pour Dieu, Dieu ne le décevra jamais.'},
+  {w:'"Xam nga ko ci lu muy def, du ci lu muy wax."',it:'Lo conosci da ciò che fa, non da ciò che dice.',fr:'On le connaît par ce qu\'il fait, pas par ce qu\'il dit.'},
+  {w:'"Yàlla mooy dëkk bëpp. Ku nekk ak Yàlla, nekk ak dëkk bi yëpp."',it:'Dio è l\'universo intero. Chi è con Dio è con tutto il creato.',fr:'Dieu est l\'univers entier. Celui qui est avec Dieu est avec toute la création.'},
+];
+const grid=document.getElementById('quotesGrid');
+const isFr=()=>document.body.classList.contains('lang-fr');
+quotes.forEach(q=>{
+  grid.innerHTML+=`<div class="q-card">
+    <p class="q-wolof">${q.w}</p>
+    <p class="q-trans" data-it>${q.it}</p>
+    <p class="q-trans" data-fr style="display:none">${q.fr}</p>
+    <button class="q-share" onclick="share('${q.w.replace(/'/g,"\\'")}','${q.it.replace(/'/g,"\\'")}','${q.fr.replace(/'/g,"\\'")}')">↗ <span data-it>Condividi</span><span data-fr style="display:none">Partager</span></button>
+  </div>`;
+});
+function share(w,it,fr){
+  const trans=isFr()?fr:it;
+  const text=w+'\n— Mame Cheikh Ibrahima Fall\n\n'+trans+'\n\ndahira-khadaikhoul-fadaili.netlify.app';
+  if(navigator.share){navigator.share({title:'Kàddu',text});}
+  else{navigator.clipboard.writeText(text).then(()=>{const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);});}
+}
+initNav('citazioni.html',false);initFooter();initLang();
+</script>
+</body></html>
