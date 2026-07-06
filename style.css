@@ -45,6 +45,7 @@ section{padding:6rem 5%;}
 .page-hero-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,24,12,.9) 0%,rgba(8,24,12,.25) 100%);}
 .page-hero-content{position:relative;z-index:1;padding:3.5rem 5%;}
 .page-hero-content .eyebrow{color:var(--gold2);}
+.page-hero-sub{color:rgba(255,255,255,.75);font-size:.95rem;margin-top:.6rem;letter-spacing:.01em;}
 .page-hero-content h1{color:#fff;font-size:clamp(2.2rem,5vw,4rem);line-height:1.05;}
 
 footer{background:#0a1e0d;color:rgba(255,255,255,.45);padding:2.5rem 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem;font-size:.75rem;}
