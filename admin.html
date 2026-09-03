@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Area Riservata | Dahira Touba Fano</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<style>
+body{background:var(--cream);font-family:'Inter',sans-serif;}
+.admin-wrap{max-width:1000px;margin:0 auto;padding:2.5rem 5% 6rem;}
+.admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;flex-wrap:wrap;gap:1rem;}
+.admin-header h1{font-family:'Playfair Display',serif;color:var(--green);font-size:1.6rem;}
+.btn-small{font-size:.78rem;padding:.5rem 1.1rem;border:1px solid var(--green);color:var(--green);background:none;cursor:pointer;border-radius:3px;}
+.btn-small:hover{background:var(--green);color:#fff;}
+.btn-gold-small{background:var(--gold);color:#fff;border:none;padding:.6rem 1.3rem;font-size:.82rem;cursor:pointer;border-radius:3px;}
+.btn-gold-small:hover{opacity:.85;}
+.btn-danger{background:none;border:1px solid #c0392b;color:#c0392b;padding:.4rem .8rem;font-size:.72rem;cursor:pointer;border-radius:3px;}
+.btn-danger:hover{background:#c0392b;color:#fff;}
+
+#loginBox{max-width:380px;margin:6rem auto;background:#fff;padding:3rem 2.5rem;border:1px solid var(--line);text-align:center;}
+#loginBox h1{font-family:'Playfair Display',serif;color:var(--green);margin-bottom:1.5rem;font-size:1.4rem;}
+#loginBox input{width:100%;padding:.8rem 1rem;margin-bottom:1rem;border:1px solid var(--line);font-family:inherit;font-size:.9rem;box-sizing:border-box;}
+#loginBox button{width:100%;background:var(--green);color:#fff;border:none;padding:.9rem;font-size:.85rem;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;}
+#loginError{color:#c0392b;font-size:.8rem;margin-top:.8rem;display:none;}
+
+.tabs{display:flex;gap:.5rem;margin-bottom:2rem;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+.tab{padding:.8rem 1.4rem;cursor:pointer;font-size:.85rem;color:var(--grey);border-bottom:2px solid transparent;}
+.tab.active{color:var(--green);border-bottom-color:var(--gold);font-weight:600;}
+.panel{display:none;}
+.panel.active{display:block;}
+
+.card-form{background:#fff;border:1px solid var(--line);padding:1.8rem;margin-bottom:2rem;}
+.card-form h3{font-family:'Playfair Display',serif;color:var(--green);margin-bottom:1rem;font-size:1.1rem;}
+.card-form label{display:block;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;color:var(--grey);margin:.9rem 0 .3rem;}
+.card-form input,.card-form textarea,.card-form select{width:100%;padding:.7rem .9rem;border:1px solid var(--line);font-family:inherit;font-size:.88rem;box-sizing:border-box;}
+.card-form textarea{min-height:70px;resize:vertical;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+@media(max-width:600px){.form-row{grid-template-columns:1fr;}}
+
+.item-row{background:#fff;border:1px solid var(--line);padding:1.2rem 1.5rem;margin-bottom:.8rem;display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;}
+.item-row .item-info{flex:1;min-width:200px;}
+.item-row strong{display:block;color:var(--green);font-size:.95rem;margin-bottom:.2rem;}
+.item-row span{font-size:.78rem;color:var(--grey);}
+.item-row img{width:60px;height:60px;object-fit:cover;border-radius:3px;}
+.item-actions{display:flex;gap:.5rem;}
+.msg{padding:.8rem 1rem;font-size:.82rem;margin-bottom:1rem;display:none;}
+.msg.ok{background:#e8f5e9;color:#2e7d32;display:block;}
+.msg.err{background:#fdecea;color:#c0392b;display:block;}
+.loading{color:var(--grey);font-size:.85rem;padding:1rem 0;}
+</style>
+</head>
+<body>
+
+<div id="loginBox">
+  <h1>Area Riservata<br><span style="font-size:.9rem;color:var(--grey);font-family:'Inter',sans-serif">Dahira Touba Fano</span></h1>
+  <input type="email" id="loginEmail" placeholder="Email">
+  <input type="password" id="loginPass" placeholder="Password">
+  <button onclick="doLogin()">Accedi</button>
+  <p id="loginError">Email o password errati.</p>
+</div>
+
+<div id="adminPanel" style="display:none">
+  <div class="admin-wrap">
+    <div class="admin-header">
+      <h1>Pannello di gestione</h1>
+      <button class="btn-small" onclick="doLogout()">Esci</button>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="eventi">Eventi</div>
+      <div class="tab" data-tab="galleria">Galleria</div>
+      <div class="tab" data-tab="citazioni">Citazioni</div>
+    </div>
+
+    <!-- EVENTI -->
+    <div class="panel active" id="panel-eventi">
+      <div class="msg" id="msg-eventi"></div>
+      <div class="card-form">
+        <h3>Aggiungi nuovo evento</h3>
+        <input type="hidden" id="ev-id">
+        <div class="form-row">
+          <div><label>Titolo (italiano)</label><input id="ev-title-it" placeholder="es. Magal Touba 2027"></div>
+          <div><label>Titolo (francese)</label><input id="ev-title-fr" placeholder="es. Magal Touba 2027"></div>
+        </div>
+        <label>Data evento</label>
+        <input type="date" id="ev-date">
+        <div class="form-row">
+          <div><label>Descrizione (italiano)</label><textarea id="ev-desc-it"></textarea></div>
+          <div><label>Descrizione (francese)</label><textarea id="ev-desc-fr"></textarea></div>
+        </div>
+        <label>Luogo (facoltativo)</label>
+        <input id="ev-location" placeholder="es. Keur Serigne Touba Fano, Monterado (AN)">
+        <div style="margin-top:1.2rem;display:flex;gap:.8rem;">
+          <button class="btn-gold-small" onclick="saveEvent()">Salva evento</button>
+          <button class="btn-small" id="ev-cancel" style="display:none" onclick="resetEventForm()">Annulla modifica</button>
+        </div>
+      </div>
+      <div id="eventiList" class="loading">Caricamento...</div>
+    </div>
+
+    <!-- GALLERIA -->
+    <div class="panel" id="panel-galleria">
+      <div class="msg" id="msg-galleria"></div>
+      <div class="card-form">
+        <h3>Carica nuova foto</h3>
+        <label>Scegli immagine</label>
+        <input type="file" id="gal-file" accept="image/*">
+        <label>Didascalia (facoltativa)</label>
+        <input id="gal-caption" placeholder="es. Magal Touba 2026">
+        <div style="margin-top:1.2rem;">
+          <button class="btn-gold-small" onclick="uploadPhoto()">Carica foto</button>
+        </div>
+      </div>
+      <div id="galleriaList" class="loading">Caricamento...</div>
+    </div>
+
+    <!-- CITAZIONI -->
+    <div class="panel" id="panel-citazioni">
+      <div class="msg" id="msg-citazioni"></div>
+      <div class="card-form">
+        <h3>Aggiungi nuova citazione</h3>
+        <input type="hidden" id="q-id">
+        <label>Testo originale (Wolof)</label>
+        <textarea id="q-wolof" placeholder='es. "Liggéey mooy jaamu Yàlla..."'></textarea>
+        <div class="form-row">
+          <div><label>Traduzione italiana</label><textarea id="q-it"></textarea></div>
+          <div><label>Traduzione francese</label><textarea id="q-fr"></textarea></div>
+        </div>
+        <label>Autore</label>
+        <input id="q-author" value="Mame Cheikh Ibrahima Fall">
+        <div style="margin-top:1.2rem;display:flex;gap:.8rem;">
+          <button class="btn-gold-small" onclick="saveQuote()">Salva citazione</button>
+          <button class="btn-small" id="q-cancel" style="display:none" onclick="resetQuoteForm()">Annulla modifica</button>
+        </div>
+      </div>
+      <div id="citazioniList" class="loading">Caricamento...</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ---------- AUTH ----------
+async function checkSession(){
+  const { data } = await sb.auth.getSession();
+  if(data.session){ showPanel(); } else { showLogin(); }
+}
+function showLogin(){ document.getElementById('loginBox').style.display='block'; document.getElementById('adminPanel').style.display='none'; }
+function showPanel(){ document.getElementById('loginBox').style.display='none'; document.getElementById('adminPanel').style.display='block'; loadEvents(); loadGallery(); loadQuotes(); }
+
+async function doLogin(){
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPass').value;
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  if(error){ document.getElementById('loginError').style.display='block'; }
+  else { document.getElementById('loginError').style.display='none'; showPanel(); }
+}
+async function doLogout(){ await sb.auth.signOut(); showLogin(); }
+
+// ---------- TABS ----------
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('panel-'+t.dataset.tab).classList.add('active');
+  });
+});
+
+function showMsg(id,text,ok){
+  const el=document.getElementById(id);
+  el.textContent=text; el.className='msg '+(ok?'ok':'err');
+  setTimeout(()=>{el.style.display='none';el.className='msg';},4000);
+}
+
+// ---------- EVENTI ----------
+async function loadEvents(){
+  const list=document.getElementById('eventiList');
+  list.innerHTML='<div class="loading">Caricamento...</div>';
+  const { data, error } = await sb.from('events').select('*').order('event_date',{ascending:true});
+  if(error){ list.innerHTML='Errore nel caricamento.'; return; }
+  if(!data.length){ list.innerHTML='<p style="color:var(--grey);font-size:.85rem">Nessun evento ancora.</p>'; return; }
+  list.innerHTML='';
+  data.forEach(ev=>{
+    const d=document.createElement('div'); d.className='item-row';
+    const dateStr=new Date(ev.event_date+'T00:00:00').toLocaleDateString('it-IT',{day:'numeric',month:'long',year:'numeric'});
+    d.innerHTML=`<div class="item-info"><strong>${ev.title_it}</strong><span>${dateStr}${ev.location?' · '+ev.location:''}</span></div>
+      <div class="item-actions">
+        <button class="btn-small" onclick='editEvent(${JSON.stringify(ev)})'>Modifica</button>
+        <button class="btn-danger" onclick="deleteEvent('${ev.id}')">Elimina</button>
+      </div>`;
+    list.appendChild(d);
+  });
+}
+function editEvent(ev){
+  document.getElementById('ev-id').value=ev.id;
+  document.getElementById('ev-title-it').value=ev.title_it||'';
+  document.getElementById('ev-title-fr').value=ev.title_fr||'';
+  document.getElementById('ev-date').value=ev.event_date||'';
+  document.getElementById('ev-desc-it').value=ev.desc_it||'';
+  document.getElementById('ev-desc-fr').value=ev.desc_fr||'';
+  document.getElementById('ev-location').value=ev.location||'';
+  document.getElementById('ev-cancel').style.display='inline-block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function resetEventForm(){
+  document.getElementById('ev-id').value='';
+  ['ev-title-it','ev-title-fr','ev-date','ev-desc-it','ev-desc-fr','ev-location'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('ev-cancel').style.display='none';
+}
+async function saveEvent(){
+  const id=document.getElementById('ev-id').value;
+  const payload={
+    title_it: document.getElementById('ev-title-it').value.trim(),
+    title_fr: document.getElementById('ev-title-fr').value.trim(),
+    event_date: document.getElementById('ev-date').value,
+    desc_it: document.getElementById('ev-desc-it').value.trim(),
+    desc_fr: document.getElementById('ev-desc-fr').value.trim(),
+    location: document.getElementById('ev-location').value.trim(),
+  };
+  if(!payload.title_it || !payload.event_date){ showMsg('msg-eventi','Titolo e data sono obbligatori.',false); return; }
+  let error;
+  if(id){ ({error} = await sb.from('events').update(payload).eq('id',id)); }
+  else { ({error} = await sb.from('events').insert(payload)); }
+  if(error){ showMsg('msg-eventi','Errore: '+error.message,false); return; }
+  showMsg('msg-eventi','Evento salvato!',true);
+  resetEventForm(); loadEvents();
+}
+async function deleteEvent(id){
+  if(!confirm('Eliminare questo evento?'))return;
+  const { error } = await sb.from('events').delete().eq('id',id);
+  if(error){ showMsg('msg-eventi','Errore: '+error.message,false); return; }
+  showMsg('msg-eventi','Evento eliminato.',true); loadEvents();
+}
+
+// ---------- GALLERIA ----------
+async function loadGallery(){
+  const list=document.getElementById('galleriaList');
+  list.innerHTML='<div class="loading">Caricamento...</div>';
+  const { data, error } = await sb.from('gallery_photos').select('*').order('created_at',{ascending:false});
+  if(error){ list.innerHTML='Errore nel caricamento.'; return; }
+  if(!data.length){ list.innerHTML='<p style="color:var(--grey);font-size:.85rem">Nessuna foto ancora.</p>'; return; }
+  list.innerHTML='';
+  data.forEach(p=>{
+    const d=document.createElement('div'); d.className='item-row';
+    d.innerHTML=`<img src="${p.image_url}" alt="">
+      <div class="item-info"><strong>${p.caption||'Senza didascalia'}</strong></div>
+      <div class="item-actions"><button class="btn-danger" onclick="deletePhoto('${p.id}','${p.image_url}')">Elimina</button></div>`;
+    list.appendChild(d);
+  });
+}
+async function uploadPhoto(){
+  const fileInput=document.getElementById('gal-file');
+  const file=fileInput.files[0];
+  if(!file){ showMsg('msg-galleria','Scegli prima un file.',false); return; }
+  const caption=document.getElementById('gal-caption').value.trim();
+  const path=Date.now()+'_'+file.name.replace(/[^a-zA-Z0-9.]/g,'_');
+  const { error: upErr } = await sb.storage.from('gallery').upload(path, file);
+  if(upErr){ showMsg('msg-galleria','Errore upload: '+upErr.message,false); return; }
+  const { data: urlData } = sb.storage.from('gallery').getPublicUrl(path);
+  const { error: dbErr } = await sb.from('gallery_photos').insert({ image_url: urlData.publicUrl, caption });
+  if(dbErr){ showMsg('msg-galleria','Errore salvataggio: '+dbErr.message,false); return; }
+  showMsg('msg-galleria','Foto caricata!',true);
+  fileInput.value=''; document.getElementById('gal-caption').value='';
+  loadGallery();
+}
+async function deletePhoto(id,url){
+  if(!confirm('Eliminare questa foto?'))return;
+  const { error } = await sb.from('gallery_photos').delete().eq('id',id);
+  if(error){ showMsg('msg-galleria','Errore: '+error.message,false); return; }
+  try{
+    const path=url.split('/gallery/')[1];
+    if(path) await sb.storage.from('gallery').remove([path]);
+  }catch(e){}
+  showMsg('msg-galleria','Foto eliminata.',true); loadGallery();
+}
+
+// ---------- CITAZIONI ----------
+async function loadQuotes(){
+  const list=document.getElementById('citazioniList');
+  list.innerHTML='<div class="loading">Caricamento...</div>';
+  const { data, error } = await sb.from('quotes').select('*').order('created_at',{ascending:false});
+  if(error){ list.innerHTML='Errore nel caricamento.'; return; }
+  if(!data.length){ list.innerHTML='<p style="color:var(--grey);font-size:.85rem">Nessuna citazione ancora.</p>'; return; }
+  list.innerHTML='';
+  data.forEach(q=>{
+    const d=document.createElement('div'); d.className='item-row';
+    d.innerHTML=`<div class="item-info"><strong>${(q.text_it||'').slice(0,60)}${(q.text_it||'').length>60?'…':''}</strong><span>${q.author||''}</span></div>
+      <div class="item-actions">
+        <button class="btn-small" onclick='editQuote(${JSON.stringify(q)})'>Modifica</button>
+        <button class="btn-danger" onclick="deleteQuote('${q.id}')">Elimina</button>
+      </div>`;
+    list.appendChild(d);
+  });
+}
+function editQuote(q){
+  document.getElementById('q-id').value=q.id;
+  document.getElementById('q-wolof').value=q.text_wolof||'';
+  document.getElementById('q-it').value=q.text_it||'';
+  document.getElementById('q-fr').value=q.text_fr||'';
+  document.getElementById('q-author').value=q.author||'Mame Cheikh Ibrahima Fall';
+  document.getElementById('q-cancel').style.display='inline-block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function resetQuoteForm(){
+  document.getElementById('q-id').value='';
+  ['q-wolof','q-it','q-fr'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('q-author').value='Mame Cheikh Ibrahima Fall';
+  document.getElementById('q-cancel').style.display='none';
+}
+async function saveQuote(){
+  const id=document.getElementById('q-id').value;
+  const payload={
+    text_wolof: document.getElementById('q-wolof').value.trim(),
+    text_it: document.getElementById('q-it').value.trim(),
+    text_fr: document.getElementById('q-fr').value.trim(),
+    author: document.getElementById('q-author').value.trim(),
+  };
+  if(!payload.text_it){ showMsg('msg-citazioni','La traduzione italiana è obbligatoria.',false); return; }
+  let error;
+  if(id){ ({error} = await sb.from('quotes').update(payload).eq('id',id)); }
+  else { ({error} = await sb.from('quotes').insert(payload)); }
+  if(error){ showMsg('msg-citazioni','Errore: '+error.message,false); return; }
+  showMsg('msg-citazioni','Citazione salvata!',true);
+  resetQuoteForm(); loadQuotes();
+}
+async function deleteQuote(id){
+  if(!confirm('Eliminare questa citazione?'))return;
+  const { error } = await sb.from('quotes').delete().eq('id',id);
+  if(error){ showMsg('msg-citazioni','Errore: '+error.message,false); return; }
+  showMsg('msg-citazioni','Citazione eliminata.',true); loadQuotes();
+}
+
+checkSession();
+</script>
+</body>
+</html>
