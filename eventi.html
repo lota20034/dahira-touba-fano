@@ -3,11 +3,13 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Eventi | Dahira Touba Fano - Keur Serigne Touba Fano</title>
+<meta name="description" content="Tutti gli eventi del Dahira Touba Fano: Magal Touba, Kourel Xassida, dhikr settimanali. Ogni sabato a Keur Serigne Touba Fano, Monterado (AN).">
 <link rel="icon" type="image/png" href="favicon.png">
-<meta name="description" content="Tutti gli eventi del Dahira Touba Fano: Magal Touba, Kourel Xassida, dhikr settimanali. Ogni sabato a Via dell'Artigianato, Monterado (AN), Keur Serigne Touba Fano.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
 <style>
 .events-list{padding:5rem 5%;}
 .event-row{display:grid;grid-template-columns:110px 1fr auto;gap:2rem;align-items:center;padding:1.8rem 0;border-bottom:1px solid var(--line);}
@@ -57,12 +59,6 @@
   <div class="divider"></div>
 
   <div class="event-row">
-    <div class="ev-date">2<small data-it>Agosto 2026</small><small data-fr>Août 2026</small></div>
-    <div><div class="ev-title">Magal Touba 2026</div><div class="ev-desc" data-it>Commemorazione dell'esilio di Cheikh Ahmadou Bamba — il giorno più importante della Mouridiyya. Celebrazione comunitaria a Fano.</div><div class="ev-desc" data-fr>Commémoration de l'exil de Cheikh Ahmadou Bamba — le jour le plus important de la Mouridiyya. Célébration communautaire à Fano.</div></div>
-    <span class="ev-badge" data-it>Grande evento</span><span class="ev-badge" data-fr>Grand événement</span>
-  </div>
-
-  <div class="event-row">
     <div class="ev-date"><small data-it>Ogni venerdì</small><small data-fr>Chaque vendredi</small></div>
     <div><div class="ev-title">Yobalu Aljuma</div><div class="ev-desc" data-it>Lettura della Surah Al-Kahf ogni venerdì mattina — pratica settimanale della comunità.</div><div class="ev-desc" data-fr>Lecture de la Sourate Al-Kahf chaque vendredi matin — pratique hebdomadaire de la communauté.</div></div>
     <span class="ev-badge" data-it>Settimanale</span><span class="ev-badge" data-fr>Hebdomadaire</span>
@@ -73,6 +69,8 @@
     <div><div class="ev-title" data-it>Dahira Generale</div><div class="ev-title" data-fr>Dahira Général</div><div class="ev-desc" data-it>Al Quran Ak Durus · Kourèl Xassida · Takusàn · Kourèl Zikroulah · Waxtàne Ak Sognè — Via dell'Artigianato, Monterado (AN)</div><div class="ev-desc" data-fr>Al Quran Ak Durus · Kourèl Xassida · Takusàn · Kourèl Zikroulah · Waxtàne Ak Sognè — Via dell'Artigianato, Monterado (AN)</div></div>
     <span class="ev-badge" data-it>Ricorrente</span><span class="ev-badge" data-fr>Récurrent</span>
   </div>
+
+  <div id="dynamicEvents"></div>
 </div>
 
 <!-- ARCHIVIO LOCANDINE -->
@@ -107,6 +105,27 @@
 <script src="imgs.js"></script><script src="common.js"></script>
 <script>
 document.getElementById('heroImg').style.backgroundImage=`url(${IMGS['june2_3']})`;
+// Eventi dinamici da Supabase
+async function loadDynamicEvents(){
+  const container=document.getElementById('dynamicEvents');
+  const { data, error } = await sb.from('events').select('*').order('event_date',{ascending:true});
+  if(error || !data) return;
+  const today=new Date().toISOString().slice(0,10);
+  data.filter(ev=>ev.event_date>=today).forEach(ev=>{
+    const d=new Date(ev.event_date+'T00:00:00');
+    const day=d.getDate();
+    const monthIt=d.toLocaleDateString('it-IT',{month:'long',year:'numeric'});
+    const monthFr=d.toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
+    const row=document.createElement('div');
+    row.className='event-row';
+    row.innerHTML=`<div class="ev-date">${day}<small>${monthIt}</small></div>
+      <div><div class="ev-title">${ev.title_it||ev.title_fr||''}</div>
+      <div class="ev-desc">${ev.desc_it||''}${ev.location?' — '+ev.location:''}</div></div>
+      <span class="ev-badge">Evento</span>`;
+    container.appendChild(row);
+  });
+}
+loadDynamicEvents();
 // Archivio locandine
 const locs=[
   {key:'loc1',label:'Dahira Generale — 25 Aprile 2026'},
