@@ -4,10 +4,11 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Citazioni | Dahira Touba Fano - Keur Serigne Touba Fano</title>
 <link rel="icon" type="image/png" href="favicon.png">
-<meta name="description" content="Kàddu: citazioni e parole di saggezza di Mame Cheikh Ibrahima Fall e della tradizione Mouride, raccolte dal Dahira Touba Fano.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
 <style>
 .quotes-intro{padding:4rem 5% 2rem;}
 .quotes-masonry{columns:2;gap:1.5rem;padding:0 5% 6rem;}
@@ -77,12 +78,26 @@ quotes.forEach(q=>{
     <button class="q-share" onclick="share('${q.w.replace(/'/g,"\\'")}','${q.it.replace(/'/g,"\\'")}','${q.fr.replace(/'/g,"\\'")}')">↗ <span data-it>Condividi</span><span data-fr style="display:none">Partager</span></button>
   </div>`;
 });
-function share(w,it,fr){
+function share(w,it,fr,author){
   const trans=isFr()?fr:it;
-  const text=w+'\n— Mame Cheikh Ibrahima Fall\n\n'+trans+'\n\ndahira-khadaikhoul-fadaili.netlify.app';
+  const text=w+'\n— '+(author||'Mame Cheikh Ibrahima Fall')+'\n\n'+trans+'\n\ndahira-khadaikhoul-fadaili.netlify.app';
   if(navigator.share){navigator.share({title:'Kàddu',text});}
   else{navigator.clipboard.writeText(text).then(()=>{const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);});}
 }
+// Citazioni dinamiche da Supabase (aggiunte dal pannello admin)
+async function loadDynamicQuotes(){
+  const { data, error } = await sb.from('quotes').select('*').order('created_at',{ascending:false});
+  if(error || !data) return;
+  data.forEach(q=>{
+    grid.innerHTML+=`<div class="q-card">
+      <p class="q-wolof">${q.text_wolof||''}</p>
+      <p class="q-trans" data-it>${q.text_it||''}</p>
+      <p class="q-trans" data-fr style="display:none">${q.text_fr||''}</p>
+      <button class="q-share" onclick="share('${(q.text_wolof||'').replace(/'/g,"\\'")}','${(q.text_it||'').replace(/'/g,"\\'")}','${(q.text_fr||'').replace(/'/g,"\\'")}','${(q.author||'').replace(/'/g,"\\'")}')">↗ <span data-it>Condividi</span><span data-fr style="display:none">Partager</span></button>
+    </div>`;
+  });
+}
+loadDynamicQuotes();
 initNav('citazioni.html',false);initFooter();initLang();
 </script>
 </body></html>
