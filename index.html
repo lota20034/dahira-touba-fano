@@ -22,6 +22,7 @@
     "addressCountry": "IT"
   },
   "sameAs": [
+    "https://whatsapp.com/channel/0029VaztSqeKQuJGy0AREc0V",
     "https://www.tiktok.com/@dahiratoubafano",
     "https://www.tiktok.com/@kourel.touba.fano",
     "https://www.instagram.com/dahira_touba_fano_",
@@ -254,7 +255,7 @@ setInterval(()=>moveC(cIdx>=slides.length-4?-(slides.length-4):1),3500);
 
 // Foto aggiunte dal pannello admin (si aggiungono al carosello in coda)
 async function loadCarouselExtras(){
-  const { data, error } = await sb.from('gallery_photos').select('*').order('created_at',{ascending:false});
+  const { data, error } = await sb.from('gallery_photos').select('*').eq('in_carousel',true).order('created_at',{ascending:false});
   if(error || !data) return;
   data.forEach(p=>{
     slides.push('__dyn');
