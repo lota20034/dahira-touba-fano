@@ -112,6 +112,10 @@ body{background:var(--cream);font-family:'Inter',sans-serif;}
         <input type="file" id="gal-file" accept="image/*">
         <label>Didascalia (facoltativa)</label>
         <input id="gal-caption" placeholder="es. Magal Touba 2026">
+        <label style="display:flex;align-items:center;gap:.6rem;margin-top:1rem;">
+          <input type="checkbox" id="gal-carousel" style="width:auto;">
+          <span style="text-transform:none;letter-spacing:0;font-size:.85rem;color:var(--green);">Mostra anche nel carosello della homepage</span>
+        </label>
         <div style="margin-top:1.2rem;">
           <button class="btn-gold-small" onclick="uploadPhoto()">Carica foto</button>
         </div>
@@ -249,7 +253,12 @@ async function loadGallery(){
   data.forEach(p=>{
     const d=document.createElement('div'); d.className='item-row';
     d.innerHTML=`<img src="${p.image_url}" alt="">
-      <div class="item-info"><strong>${p.caption||'Senza didascalia'}</strong></div>
+      <div class="item-info"><strong>${p.caption||'Senza didascalia'}</strong>
+        <label style="display:flex;align-items:center;gap:.4rem;margin-top:.3rem;cursor:pointer;">
+          <input type="checkbox" ${p.in_carousel?'checked':''} onchange="toggleCarousel('${p.id}',this.checked)" style="width:auto;">
+          <span style="font-size:.72rem;color:var(--grey);">Nel carosello homepage</span>
+        </label>
+      </div>
       <div class="item-actions"><button class="btn-danger" onclick="deletePhoto('${p.id}','${p.image_url}')">Elimina</button></div>`;
     list.appendChild(d);
   });
@@ -259,15 +268,20 @@ async function uploadPhoto(){
   const file=fileInput.files[0];
   if(!file){ showMsg('msg-galleria','Scegli prima un file.',false); return; }
   const caption=document.getElementById('gal-caption').value.trim();
+  const inCarousel=document.getElementById('gal-carousel').checked;
   const path=Date.now()+'_'+file.name.replace(/[^a-zA-Z0-9.]/g,'_');
   const { error: upErr } = await sb.storage.from('gallery').upload(path, file);
   if(upErr){ showMsg('msg-galleria','Errore upload: '+upErr.message,false); return; }
   const { data: urlData } = sb.storage.from('gallery').getPublicUrl(path);
-  const { error: dbErr } = await sb.from('gallery_photos').insert({ image_url: urlData.publicUrl, caption });
+  const { error: dbErr } = await sb.from('gallery_photos').insert({ image_url: urlData.publicUrl, caption, in_carousel: inCarousel });
   if(dbErr){ showMsg('msg-galleria','Errore salvataggio: '+dbErr.message,false); return; }
   showMsg('msg-galleria','Foto caricata!',true);
-  fileInput.value=''; document.getElementById('gal-caption').value='';
+  fileInput.value=''; document.getElementById('gal-caption').value=''; document.getElementById('gal-carousel').checked=false;
   loadGallery();
+}
+async function toggleCarousel(id,val){
+  const { error } = await sb.from('gallery_photos').update({in_carousel:val}).eq('id',id);
+  if(error){ showMsg('msg-galleria','Errore: '+error.message,false); }
 }
 async function deletePhoto(id,url){
   if(!confirm('Eliminare questa foto?'))return;
