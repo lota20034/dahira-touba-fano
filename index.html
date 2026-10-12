@@ -107,6 +107,7 @@
   .next-event{grid-template-columns:1fr;}
 }
 </style>
+<link rel="stylesheet" href="theme.css">
 </head>
 <body>
 <nav id="nav" class="nav-transparent"></nav>
@@ -114,17 +115,29 @@
 <section class="hero" id="hero">
   <div class="hero-bg" id="heroBg"></div>
   <div class="hero-ov"></div>
-  <div class="hero-content">
-    <span class="hero-eyebrow">Khadaikhoul Fadha-il · Fano, Italia</span>
-    <h1 data-it>Una comunità di <em>fede</em>,<br>lavoro e devozione</h1>
-    <h1 data-fr>Une communauté de <em>foi</em>,<br>de travail et de dévotion</h1>
-    <p class="hero-sub" data-it>Discepoli di Cheikh Ahmadou Bamba riuniti a Fano nel nome del dhikr, della fratellanza e del servizio.</p>
-    <p class="hero-sub" data-fr>Disciples de Cheikh Ahmadou Bamba réunis à Fano au nom du dhikr, de la fraternité et du service.</p>
-    <div class="hero-btns">
-      <a class="btn btn-gold" href="eventi.html" data-it>Prossimi eventi</a>
-      <a class="btn btn-gold" href="eventi.html" data-fr>Prochains événements</a>
-      <a class="btn btn-outline" href="chisiamo.html" data-it>Chi siamo</a>
-      <a class="btn btn-outline" href="chisiamo.html" data-fr>Qui sommes-nous</a>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <span class="hero-eyebrow">Khadaikhoul Fadha-il · Fano, Italia</span>
+      <h1 data-it>Una comunità di <em>fede</em>,<br>lavoro e devozione</h1>
+      <h1 data-fr>Une communauté de <em>foi</em>,<br>de travail et de dévotion</h1>
+      <p class="hero-sub" data-it>Discepoli di Cheikh Ahmadou Bamba riuniti a Fano nel nome del dhikr, della fratellanza e del servizio.</p>
+      <p class="hero-sub" data-fr>Disciples de Cheikh Ahmadou Bamba réunis à Fano au nom du dhikr, de la fraternité et du service.</p>
+      <div class="hero-btns">
+        <a class="btn btn-gold" href="eventi.html" data-it>Prossimi eventi</a>
+        <a class="btn btn-gold" href="eventi.html" data-fr>Prochains événements</a>
+        <a class="btn btn-outline" href="chisiamo.html" data-it>Chi siamo</a>
+        <a class="btn btn-outline" href="chisiamo.html" data-fr>Qui sommes-nous</a>
+      </div>
+    </div>
+    <div class="hero-emblem" aria-hidden="true">
+      <div class="hero-star">
+        <i style="--z:-110px"></i><i style="--z:-110px;--r:45deg"></i>
+        <i style="--z:-55px"></i><i style="--z:-55px;--r:45deg"></i>
+        <i class="fill" style="--z:0px"></i><i class="fill" style="--z:0px;--r:45deg"></i>
+        <i style="--z:55px"></i><i style="--z:55px;--r:45deg"></i>
+        <i style="--z:110px"></i><i style="--z:110px;--r:45deg"></i>
+      </div>
+      <div class="hero-logo"><img id="heroLogo" src="" alt=""></div>
     </div>
   </div>
   <div class="hero-scroll"><div class="scroll-line"></div>Scroll</div>
@@ -175,14 +188,30 @@
 <section class="next-event">
   <img id="eventPoster" src="" alt="Prossimo evento" class="event-poster">
   <div class="event-info">
-    <span class="eyebrow" data-it>Prossimo grande evento</span>
-    <span class="eyebrow" data-fr>Prochain grand événement</span>
-    <div class="event-date-big">29 AGO</div>
-    <h2 class="section-title">Magal Touba 2026</h2>
-    <p style="color:var(--grey);font-size:.9rem;margin-bottom:1rem" data-it>Commemorazione dell'esilio di Cheikh Ahmadou Bamba — il giorno più importante della Mouridiyya, celebrato insieme a Fano.</p>
-    <p style="color:var(--grey);font-size:.9rem;margin-bottom:1rem" data-fr>Commémoration de l'exil de Cheikh Ahmadou Bamba — le jour le plus important de la Mouridiyya, célébré ensemble à Fano.</p>
+    <span class="eyebrow" id="evEyeIt" data-it>Ultimo grande evento</span>
+    <span class="eyebrow" id="evEyeFr" data-fr>Dernier grand événement</span>
+    <div class="event-date-big" id="evDate">29 AGO</div>
+    <h2 class="section-title" id="evTitleIt" data-it>Magal Touba 2026</h2>
+    <h2 class="section-title" id="evTitleFr" data-fr>Magal Touba 2026</h2>
+    <p id="evDescIt" style="color:var(--grey);font-size:.9rem;margin-bottom:1rem" data-it>Commemorazione dell'esilio di Cheikh Ahmadou Bamba — il giorno più importante della Mouridiyya, celebrato insieme a Fano.</p>
+    <p id="evDescFr" style="color:var(--grey);font-size:.9rem;margin-bottom:1rem" data-fr>Commémoration de l'exil de Cheikh Ahmadou Bamba — le jour le plus important de la Mouridiyya, célébré ensemble à Fano.</p>
     <a href="eventi.html" class="btn btn-dark" data-it>Vedi tutti gli eventi</a>
     <a href="eventi.html" class="btn btn-dark" data-fr>Voir tous les événements</a>
+  </div>
+</section>
+
+<!-- PODCAST -->
+<section class="podcast" id="podcast">
+  <div>
+    <span class="eyebrow"><span data-it>Nuovo · Podcast</span><span data-fr>Nouveau · Podcast</span></span>
+    <h2>Keur Serigne Touba</h2>
+    <p><span data-it>Tre persone, tre poltroncine, un tema. Ognuno dice la sua, poi ci si confronta per arrivare a un punto di vista condiviso. Per chi conosce la confraternita da una vita e per chi la incontra per la prima volta.</span><span data-fr>Trois personnes, trois fauteuils, un thème. Chacun donne son avis, puis on échange pour arriver à un point de vue partagé. Pour ceux qui connaissent la confrérie depuis toujours et pour ceux qui la découvrent.</span></p>
+    <a href="social.html" class="btn btn-gold"><span data-it>Guarda le puntate</span><span data-fr>Voir les épisodes</span></a>
+  </div>
+  <div class="pod-stack" aria-hidden="true">
+    <div class="pod-card pod-1"><span data-it>Prima voce</span><span data-fr>Première voix</span><small><span data-it>La mia opinione</span><span data-fr>Mon avis</span></small></div>
+    <div class="pod-card pod-2"><span data-it>Seconda voce</span><span data-fr>Deuxième voix</span><small><span data-it>La mia opinione</span><span data-fr>Mon avis</span></small></div>
+    <div class="pod-card pod-3"><span data-it>Terza voce</span><span data-fr>Troisième voix</span><small><span data-it>… e ci confrontiamo</span><span data-fr>… et on échange</span></small></div>
   </div>
 </section>
 
@@ -234,6 +263,30 @@ setInterval(()=>{hIdx=(hIdx+1)%heroBgs.length;setHero();},5000);
 
 document.getElementById('aboutImg').src = IMGS['studio1'];
 document.getElementById('eventPoster').src = IMGS['magal'];
+document.getElementById('heroLogo').src = IMGS['logo'];
+
+// Evento in evidenza: se nel pannello admin c'è un evento futuro, prende il suo posto.
+// Altrimenti resta l'ultimo grande evento (Magal) senza dire che è "prossimo".
+async function loadNextEvent(){
+  const { data, error } = await sb.from('events').select('*').order('event_date',{ascending:true});
+  if(error || !data) return;
+  const today = new Date().toISOString().slice(0,10);
+  const ev = data.find(e => e.event_date >= today);
+  if(!ev) return;
+  const d = new Date(ev.event_date+'T00:00:00');
+  const mon = d.toLocaleDateString('it-IT',{month:'short'}).replace('.','').toUpperCase();
+  document.getElementById('evDate').textContent = d.getDate()+' '+mon;
+  document.getElementById('evEyeIt').textContent = 'Prossimo evento';
+  document.getElementById('evEyeFr').textContent = 'Prochain événement';
+  document.getElementById('evTitleIt').textContent = ev.title_it || ev.title_fr || '';
+  document.getElementById('evTitleFr').textContent = ev.title_fr || ev.title_it || '';
+  const loc = ev.location ? ' — '+ev.location : '';
+  document.getElementById('evDescIt').textContent = (ev.desc_it || '') + loc;
+  document.getElementById('evDescFr').textContent = (ev.desc_fr || ev.desc_it || '') + loc;
+  const p = document.getElementById('eventPoster');
+  p.src = IMGS['logo']; p.alt = ''; p.classList.add('poster-logo');
+}
+loadNextEvent();
 
 // Carosello
 const slides = ['studio1','studio2','studio3','studio4','studio5','june2_1','june2_2','june2_3','june2_4','june2_5','june1_1','june1_2','group1','sokhna1','portrait1'];
@@ -270,5 +323,6 @@ initNav('index.html');
 initFooter();
 initLang();
 </script>
+<script src="theme.js"></script>
 </body>
 </html>

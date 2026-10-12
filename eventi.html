@@ -35,6 +35,7 @@
 .map-placeholder{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:3rem 2rem;text-align:center;color:rgba(255,255,255,.5);font-size:.85rem;}
 @media(max-width:860px){.event-row{grid-template-columns:1fr;gap:.5rem;}.ev-badge{display:none;}.archive-grid{grid-template-columns:1fr 1fr;}.weekly-sec{grid-template-columns:1fr;}}
 </style>
+<link rel="stylesheet" href="theme.css">
 </head>
 <body>
 <nav id="nav"></nav>
@@ -92,13 +93,13 @@
     <div class="divider"></div>
     <p data-it>Gli incontri si svolgono ogni sabato a partire dalle ore 15:00. Tutti sono benvenuti — portate il vostro cuore aperto e la voglia di stare insieme nella fede.</p>
     <p data-fr>Les réunions se tiennent chaque samedi à partir de 15h00. Tous sont les bienvenus — apportez votre cœur ouvert et l'envie d'être ensemble dans la foi.</p>
-    <p style="color:rgba(255,255,255,.75);font-size:.88rem">📍 Via dell'Artigianato, Monterado (AN), Italia</p>
+    <p style="color:rgba(255,255,255,.75);font-size:.88rem">Via dell'Artigianato, Monterado (AN), Italia</p>
     <br>
     <a href="https://maps.google.com/?q=Via+dell'Artigianato+Ponte+Rio+PU" target="_blank" class="btn btn-gold" data-it>Apri su Google Maps</a>
     <a href="https://maps.google.com/?q=Via+dell'Artigianato+Ponte+Rio+PU" target="_blank" class="btn btn-gold" data-fr>Ouvrir sur Google Maps</a>
   </div>
-  <div class="map-placeholder" data-it>📍 Via dell'Artigianato<br>Monterado (AN)<br><br>Keur Serigne Touba Fano</div>
-  <div class="map-placeholder" data-fr>📍 Via dell'Artigianato<br>Monterado (AN)<br><br>Keur Serigne Touba Fano</div>
+  <div class="map-placeholder" data-it>Via dell'Artigianato<br>Monterado (AN)<br><br>Keur Serigne Touba Fano</div>
+  <div class="map-placeholder" data-fr>Via dell'Artigianato<br>Monterado (AN)<br><br>Keur Serigne Touba Fano</div>
 </div>
 
 <footer id="footer"></footer>
@@ -142,4 +143,5 @@ locs.forEach(l=>{
 });
 initNav('eventi.html',false);initFooter();initLang();
 </script>
+<script src="theme.js"></script>
 </body></html>

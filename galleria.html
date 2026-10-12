@@ -25,6 +25,7 @@
 @media(max-width:860px){.masonry{columns:2;}}
 @media(max-width:500px){.masonry{columns:1;}}
 </style>
+<link rel="stylesheet" href="theme.css">
 </head>
 <body>
 <nav id="nav"></nav>
@@ -93,4 +94,5 @@ function navLb(dir){currentIdx=(currentIdx+dir+galleryKeys.length)%galleryKeys.l
 document.getElementById('lightbox').onclick=function(e){if(e.target===this)closeLb();}
 initNav('galleria.html',false);initFooter();initLang();
 </script>
+<script src="theme.js"></script>
 </body></html>
