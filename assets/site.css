@@ -397,3 +397,11 @@ footer.foot{background:var(--green-ink);color:#9fae9d;font-size:.86rem}
 /* ---------- Comparsa allo scroll (visibile anche senza JS) ---------- */
 .js .rv{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
 .js .rv.in{opacity:1;transform:none}
+
+/* ---------- Domande frequenti ---------- */
+.faq{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.1rem 0;font-family:var(--display);font-weight:700;font-size:1.2rem;color:var(--green)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--body);font-size:1.5rem;color:var(--gold-deep);flex:none;transition:transform .2s}
+.faq[open] summary::after{transform:rotate(45deg)}
+.faq p{color:var(--muted);padding-bottom:1.2rem;max-width:66ch}

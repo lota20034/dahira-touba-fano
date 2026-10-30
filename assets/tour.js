@@ -66,7 +66,7 @@ renderHl();
 var bars = [].slice.call(barsEl.children);
 function build(layer, i) {
   var n = NODES[i];
-  layer.querySelector('.zoom').innerHTML = '<div class="pano"><img src="img/tour/' + n.img + '.webp" alt="' + D.esc(L(n.t)) + '"' + (i === 0 ? ' fetchpriority="high"' : '') + '>' +
+  layer.querySelector('.zoom').innerHTML = '<div class="pano"><img src="img/tour/' + n.img + '.webp" alt="Keur Serigne Touba Fano – ' + D.esc(L(n.t)) + '"' + (i === 0 ? ' fetchpriority="high"' : '') + '>' +
     n.hs.map(function (h, k) { return '<button type="button" class="hs' + (h.left ? ' left' : '') + (h.comm ? ' comm' : '') + '" style="left:' + h.x + '%;top:' + h.y + '%" data-k="' + k + '"><span class="dot"></span><span class="lbl">' + D.esc(L(h.l)) + ARROW + '</span></button>'; }).join('') + '</div>';
 }
 function measure(i) {

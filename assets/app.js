@@ -34,6 +34,7 @@ D.paras = function (it, fr) {
 /* ---------- Lingua ---------- */
 D.lang = 'it';
 try { D.lang = localStorage.getItem('dtf_lang') === 'fr' ? 'fr' : 'it'; } catch (e) {}
+var qlang = new URLSearchParams(location.search).get('lang'); if (qlang === 'fr' || qlang === 'it') D.lang = qlang;
 D.setLang = function (l) {
   D.lang = l === 'fr' ? 'fr' : 'it';
   document.body.classList.toggle('lang-fr', D.lang === 'fr');

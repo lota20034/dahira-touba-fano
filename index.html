@@ -75,6 +75,24 @@
     "Marche"
    ],
    "hasMap": "https://maps.app.goo.gl/Qmxy6Exi93mN8in39",
+   "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 43.709937,
+    "longitude": 13.080938
+   },
+   "openingHoursSpecification": [
+    {
+     "@type": "OpeningHoursSpecification",
+     "dayOfWeek": "https://schema.org/Saturday",
+     "opens": "15:00",
+     "closes": "19:00"
+    }
+   ],
+   "knowsLanguage": [
+    "it",
+    "fr",
+    "wo"
+   ],
    "sameAs": [
     "https://whatsapp.com/channel/0029VaztSqeKQuJGy0AREc0V",
     "https://www.tiktok.com/@dahiratoubafano",
@@ -82,6 +100,43 @@
     "https://www.instagram.com/dahira_touba_fano_",
     "https://www.instagram.com/daray.toubafano",
     "https://www.youtube.com/@DAHIRATOUBAFANO"
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "Dove si trova Keur Serigne Touba Fano?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Keur Serigne Touba Fano, la casa della Dahira Touba Fano, è in Via dell’Artigianato a Monterado (Trecastelli, provincia di Ancona), a pochi minuti da Fano. Su Google Maps basta cercare “Keur Serigne Touba Fano”."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Quando si incontra la Dahira Touba Fano?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Ogni sabato dalle 15:00: Al Quran Ak Durus, Kourèl Xassida, Takusàn, Kourèl Zikroulah e Waxtàne Ak Sognè. Il venerdì mattina c’è Yobalu Aljuma e la domenica le lezioni di Corano."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Cos’è una dahira?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Una dahira è un’associazione di discepoli della Mouridiyya, la confraternita fondata da Cheikh Ahmadou Bamba (Serigne Touba). Ci si riunisce per pregare, recitare i khassaïdes, studiare e aiutarsi a vicenda."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "Chi può partecipare?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Tutti sono benvenuti, anche chi non conosce la confraternita e vuole scoprirla."
+     }
+    }
    ]
   }
  ]
@@ -91,7 +146,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://elgzwgudzwqrrzygfpkp.supabase.co" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=1">
+<link rel="preload" as="image" href="img/tour/cancello.webp" fetchpriority="high">
+<link rel="stylesheet" href="assets/site.css?v=2">
 </head>
 <body>
 <a href="#main" class="skip" style="position:absolute;left:-9999px">Vai al contenuto</a>
@@ -186,6 +242,16 @@
   </div>
 </section>
 
+<section class="block" style="background:var(--paper)" id="faq">
+  <div class="wrap narrow">
+    <div class="head rv"><span class="eyebrow"><span data-it>Domande frequenti</span><span data-fr>Questions fréquentes</span></span><h2><span data-it>Prima di venire a trovarci</span><span data-fr>Avant de venir nous voir</span></h2></div>
+    <details class="faq rv"><summary><span data-it>Dove si trova Keur Serigne Touba Fano?</span><span data-fr>Où se trouve Keur Serigne Touba Fano ?</span></summary><p data-it>Keur Serigne Touba Fano, la casa della Dahira Touba Fano, è in Via dell’Artigianato a Monterado (Trecastelli, provincia di Ancona), a pochi minuti da Fano. Su Google Maps basta cercare “Keur Serigne Touba Fano”.</p><p data-fr>Keur Serigne Touba Fano, la maison de la Dahira Touba Fano, se trouve Via dell’Artigianato à Monterado (Trecastelli, province d’Ancône), à quelques minutes de Fano. Sur Google Maps, il suffit de chercher « Keur Serigne Touba Fano ».</p></details>
+    <details class="faq rv"><summary><span data-it>Quando si incontra la Dahira Touba Fano?</span><span data-fr>Quand se réunit la Dahira Touba Fano ?</span></summary><p data-it>Ogni sabato dalle 15:00: Al Quran Ak Durus, Kourèl Xassida, Takusàn, Kourèl Zikroulah e Waxtàne Ak Sognè. Il venerdì mattina c’è Yobalu Aljuma e la domenica le lezioni di Corano.</p><p data-fr>Chaque samedi dès 15h00 : Al Quran Ak Durus, Kourèl Xassida, Takusàn, Kourèl Zikroulah et Waxtàne Ak Sognè. Le vendredi matin il y a Yobalu Aljuma et le dimanche les cours de Coran.</p></details>
+    <details class="faq rv"><summary><span data-it>Cos’è una dahira?</span><span data-fr>Qu’est-ce qu’une dahira ?</span></summary><p data-it>Una dahira è un’associazione di discepoli della Mouridiyya, la confraternita fondata da Cheikh Ahmadou Bamba (Serigne Touba). Ci si riunisce per pregare, recitare i khassaïdes, studiare e aiutarsi a vicenda.</p><p data-fr>Une dahira est une association de disciples de la Mouridiyya, la confrérie fondée par Cheikh Ahmadou Bamba (Serigne Touba). On s’y réunit pour prier, réciter les khassaïdes, étudier et s’entraider.</p></details>
+    <details class="faq rv"><summary><span data-it>Chi può partecipare?</span><span data-fr>Qui peut participer ?</span></summary><p data-it>Tutti sono benvenuti, anche chi non conosce la confraternita e vuole scoprirla.</p><p data-fr>Tout le monde est le bienvenu, même ceux qui ne connaissent pas la confrérie et veulent la découvrir.</p></details>
+  </div>
+</section>
+
 <section class="block on-dark" id="diayante" hidden>
   <div class="wrap">
     <div class="head"><span class="eyebrow"><span data-it>Sostieni la dahira</span><span data-fr>Soutenir la dahira</span></span><h2>Diayanté</h2><p id="dyText"></p></div>
@@ -196,8 +262,8 @@
 <footer id="foot" class="foot"></footer>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script src="assets/app.js?v=1"></script>
-<script src="assets/tour.js?v=1"></script>
-<script src="assets/pages.js?v=1"></script>
+<script src="assets/tour.js?v=2"></script>
+<script src="assets/pages.js?v=2"></script>
 <script>DTF.page.home();</script>
 </body>
 </html>

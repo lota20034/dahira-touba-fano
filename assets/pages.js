@@ -154,6 +154,15 @@ P.evento = function () {
       var e = r.data;
       if (!e) { $('evHead').innerHTML = '<h1>' + t('Evento non trovato', 'Événement introuvable') + '</h1>'; $('evGal').innerHTML = ''; return; }
       document.title = D.L(e.title_it, e.title_fr) + ' | Dahira Touba Fano';
+      var link = document.createElement('link'); link.rel = 'canonical'; link.href = location.origin + '/evento.html?id=' + e.id; document.head.appendChild(link);
+      var md = document.querySelector('meta[name="description"]'); if (md && (e.desc_it || e.title_it)) md.content = (e.title_it + ' — ' + (e.desc_it || '')).slice(0, 155);
+      var ld = document.createElement('script'); ld.type = 'application/ld+json';
+      ld.textContent = JSON.stringify({'@context': 'https://schema.org', '@type': 'Event', name: e.title_it, startDate: e.event_date, description: e.desc_it || e.title_it,
+        eventStatus: 'https://schema.org/EventScheduled', eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+        image: e.cover_url ? [new URL(e.cover_url, location.origin).href] : [location.origin + '/img/og.jpg'],
+        location: {'@type': 'Place', name: 'Keur Serigne Touba Fano', address: {'@type': 'PostalAddress', streetAddress: "Via dell'Artigianato", addressLocality: 'Monterado, Trecastelli', addressRegion: 'AN', postalCode: '60012', addressCountry: 'IT'}},
+        organizer: {'@type': 'Organization', name: 'Dahira Touba Fano', url: location.origin + '/'}});
+      document.head.appendChild(ld);
       if (e.cover_url) $('evBg').src = e.cover_url;
       $('evHead').innerHTML = '<span class="eyebrow" style="color:var(--gold)">' + D.date(e.event_date, {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'}) + '</span><h1>' + t(e.title_it, e.title_fr) + '</h1>' + (e.location ? '<p>' + esc(e.location) + '</p>' : '');
       var yt = e.youtube_url && D.ytId(e.youtube_url);
