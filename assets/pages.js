@@ -85,8 +85,9 @@ P.home = function () {
     });
     // citazione
     D.quotes().then(function (qs) {
-      var q = qs[Math.floor(Math.random() * qs.length)];
-      $('quote').innerHTML = '<p class="wo">“' + esc(q.text_wo || q.text_it) + '”</p>' + (q.text_wo ? '<p class="tr">' + t(q.text_it, q.text_fr) + '</p>' : '') + '<cite>' + esc(q.author || 'Mame Cheikh Ibrahima Fall') + '</cite>';
+      var yb = D.yobalou ? D.yobalou(cfg, qs)[0] : null, q = yb ? yb.q : qs[Math.floor(Math.random() * qs.length)];
+      $('quote').innerHTML = (yb ? '<span class="eyebrow">Yobalou Biss Bi · ' + D.fridayLabel(yb.date) + '</span>' : '') +
+        '<p class="wo">“' + esc(q.text_wo || q.text_it) + '”</p>' + (q.text_wo ? '<p class="tr">' + t(q.text_it, q.text_fr) + '</p>' : '') + '<cite>' + esc(q.author || 'Mame Cheikh Ibrahima Fall') + '</cite>';
     });
     // Diayanté
     var dy = cfg.diayante;
@@ -220,8 +221,20 @@ P.galleria = function () {
 };
 
 P.citazioni = function () {
-  D.ready.then(function () {
+  D.ready.then(function (r) {
     D.quotes().then(function (qs) {
+      var yb = D.yobalou(r.cfg, qs), box = $('yobalou');
+      if (yb.length) {
+        var cur = yb[0], q = cur.q;
+        box.hidden = false;
+        box.innerHTML = '<div class="wrap"><div class="yb"><span class="eyebrow">Yobalou Biss Bi · ' + D.fridayLabel(cur.date) + '</span>' +
+          '<p class="wo">“' + esc(q.text_wo || q.text_it) + '”</p>' + (q.text_wo ? '<p class="tr">' + t(q.text_it, q.text_fr) + '</p>' : '') + '<cite>' + esc(q.author || 'Mame Cheikh Ibrahima Fall') + '</cite>' +
+          '<div class="actions" style="justify-content:center"><button type="button" class="btn" data-img="post">' + t('Immagine per i post', 'Image pour les posts') + '</button><button type="button" class="btn ghost" data-img="story">' + t('Immagine per le storie', 'Image pour les stories') + '</button></div></div>' +
+          (yb.length > 1 ? '<details class="yb-arch"><summary>' + t('I venerdì passati', 'Les vendredis passés') + ' (' + (yb.length - 1) + ')</summary><ol>' + yb.slice(1).map(function (x) {
+            return '<li><span class="eyebrow">' + D.fridayLabel(x.date) + '</span><p class="wo">“' + esc(x.q.text_wo || x.q.text_it) + '”</p>' + (x.q.text_wo ? '<p class="tr">' + t(x.q.text_it, x.q.text_fr) + '</p>' : '') + '</li>';
+          }).join('') + '</ol></details>' : '') + '</div>';
+        box.addEventListener('click', function (e) { var b = e.target.closest('[data-img]'); if (!b) return; b.disabled = true; D.shareQuoteImage(q, b.dataset.img, cur.date).then(function () { b.disabled = false; }); });
+      }
       $('quotes').innerHTML = qs.map(function (q, i) {
         return '<article class="q rv"><p class="wo">“' + esc(q.text_wo || q.text_it) + '”</p>' + (q.text_wo ? '<p class="tr">' + t(q.text_it, q.text_fr) + '</p>' : '') +
           '<footer><cite>' + esc(q.author || 'Mame Cheikh Ibrahima Fall') + '</cite><button type="button" data-i="' + i + '">' + t('Copia', 'Copier') + '</button></footer></article>';

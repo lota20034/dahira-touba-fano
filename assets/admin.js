@@ -321,30 +321,52 @@ function renderComms() {
   });
 }
 
-/* ================= CITAZIONI ================= */
+/* ================= CITAZIONI e YOBALOU BISS BI ================= */
+function nextFriday() { var d = new Date(); d.setHours(12); d.setDate(d.getDate() + ((5 - d.getDay() + 7) % 7)); return d.toISOString().slice(0, 10); }
 function renderQuotes() {
-  var p = qs('[data-panel="citazioni"]');
+  var p = qs('[data-panel="citazioni"]'), yob = Object.assign({}, S.settings.yobalou || {});
+  function dateOf(id) { return Object.keys(yob).filter(function (d) { return yob[d] === id; }).sort().reverse(); }
+  var cur = D.yobalou({yobalou: yob}, S.quotes)[0];
+  var future = Object.keys(yob).filter(function (d) { return d > D.today(); }).sort();
   function form(q, i) {
-    q = q || {};
-    return '<div class="box" data-q="' + (q.id || 'new') + '"><h3>' + (q.id ? 'Citazione ' + (i + 1) : 'Nuova citazione') + '</h3>' +
+    q = q || {}; var ds = q.id ? dateOf(q.id) : [];
+    return '<div class="box" data-q="' + (q.id || 'new') + '"><h3>' + (q.id ? 'Citazione ' + (i + 1) : 'Nuova citazione') + (ds.length ? ' <span class="tag">Yobalou ' + ds.map(fmtDate).join(', ') + '</span>' : '') + '</h3>' +
       '<label class="f">Testo originale (wolof)<textarea data-k="text_wo" style="min-height:70px">' + esc(q.text_wo) + '</textarea></label>' +
       '<div class="row"><label class="f">Traduzione italiana<textarea data-k="text_it" style="min-height:70px">' + esc(q.text_it) + '</textarea></label><label class="f">Traduzione francese<textarea data-k="text_fr" style="min-height:70px">' + esc(q.text_fr) + '</textarea></label></div>' +
-      '<div class="row"><label class="f">Autore<input data-k="author" value="' + esc(q.author || 'Mame Cheikh Ibrahima Fall') + '"></label><label class="f">Posizione<small>1 = la prima della pagina.</small><input data-k="order_index" type="number" inputmode="numeric" value="' + esc(q.order_index != null ? q.order_index : S.quotes.length + 1) + '"></label></div>' +
-      '<div class="bar"><button class="b gold" data-save type="button">' + (q.id ? 'Salva' : 'Aggiungi la citazione') + '</button>' + (q.id ? '<button class="b red" data-del type="button">Elimina</button>' : '') + '</div><div data-msg></div></div>';
+      '<div class="row"><label class="f">Autore<input data-k="author" value="' + esc(q.author || 'Mame Cheikh Ibrahima Fall') + '"></label><label class="f">Posizione<small>1 = la prima della pagina.</small><input data-k="order_index" type="number" inputmode="numeric" value="' + esc(q.order_index != null ? q.order_index : S.quotes.length + 1) + '"></label>' +
+      '<label class="f">Yobalou Biss Bi del venerdì<small>Scegli il venerdì in cui deve uscire. Vuoto = citazione normale.</small><input data-yob type="date" value="' + esc(q.id ? (ds[0] || '') : nextFriday()) + '"></label></div>' +
+      '<div class="bar"><button class="b gold" data-save type="button">' + (q.id ? 'Salva' : 'Aggiungi la citazione') + '</button>' + (q.id ? '<button class="b line sm" data-img="post" type="button">Immagine post 4:5</button><button class="b line sm" data-img="story" type="button">Immagine storia 9:16</button><button class="b red" data-del type="button">Elimina</button>' : '') + '</div><div data-msg></div></div>';
   }
-  p.innerHTML = form(null) + S.quotes.map(function (q, i) { return form(q, i); }).join('');
+  p.innerHTML =
+    '<div class="box"><h2>Yobalou Biss Bi</h2>' + (cur ? '<p>Questa settimana (' + fmtDate(cur.date) + '): <strong>“' + esc(cur.q.text_wo || cur.q.text_it) + '”</strong></p>' : '<p class="hint">Nessun Yobalou Biss Bi ancora: aggiungi una citazione e scegli il venerdì. Finché non ce n\'è uno, in home esce una citazione a caso.</p>') +
+    (future.length ? '<p class="hint">Già programmati: ' + future.map(fmtDate).join(' · ') + '</p>' : '') +
+    '<p class="hint">Ogni Yobalou Biss Bi compare da solo il suo venerdì in home e in cima alla pagina Citazioni; quelli passati restano nell\'archivio. Con “Immagine post / storia” scarichi il post già pronto per Instagram, TikTok e WhatsApp (dal telefono si apre direttamente la condivisione).</p></div>' +
+    form(null) + S.quotes.map(function (q, i) { return form(q, i); }).join('');
+  function saveYob(id, date) {
+    Object.keys(yob).forEach(function (d) { if (yob[d] === id && d !== date) delete yob[d]; });
+    if (date) yob[date] = id;
+    return sb.from('settings').upsert({key: 'yobalou', value: yob, updated_at: new Date().toISOString()}).then(function (r) { if (r.error) throw r.error; S.settings.yobalou = yob; });
+  }
   qsa('[data-q]', p).forEach(function (b) {
-    var id = b.dataset.q;
+    var id = b.dataset.q, box = qs('[data-msg]', b);
     qs('[data-save]', b).onclick = function () {
       var row = {}; qsa('[data-k]', b).forEach(function (i) { row[i.dataset.k] = i.value.trim() || null; });
       row.order_index = parseInt(row.order_index, 10) || 0;
-      if (!row.text_wo && !row.text_it) return msg(qs('[data-msg]', b), 'Scrivi almeno il testo in wolof o in italiano.', 'err');
-      (id === 'new' ? sb.from('quotes').insert(row) : sb.from('quotes').update(row).eq('id', id)).then(function (r) {
-        if (r.error) return fail(qs('[data-msg]', b), r.error);
-        loadAll().then(function () { renderQuotes(); msg(qs('[data-q="new"] [data-msg]', p), 'Citazione salvata.', 'ok'); });
-      });
+      var date = qs('[data-yob]', b).value;
+      if (!row.text_wo && !row.text_it) return msg(box, 'Scrivi almeno il testo in wolof o in italiano.', 'err');
+      if (date && yob[date] && yob[date] !== id) { var other = S.quotes.filter(function (x) { return x.id === yob[date]; })[0]; if (other && !b.dataset.ok) { b.dataset.ok = 1; return msg(box, 'Per ' + fmtDate(date) + ' c\'è già un\'altra citazione. Tocca di nuovo “Salva” per sostituirla.', 'err'); } }
+      if (date && new Date(date + 'T12:00:00').getDay() !== 5 && !b.dataset.okday) { b.dataset.okday = 1; return msg(box, 'Attenzione: ' + fmtDate(date) + ' non è un venerdì. Tocca di nuovo “Salva” se va bene lo stesso.', 'err'); }
+      msg(box, 'Salvataggio…');
+      (id === 'new' ? sb.from('quotes').insert(row).select().single() : sb.from('quotes').update(row).eq('id', id).select().single()).then(function (r) {
+        if (r.error) throw r.error; return saveYob(r.data.id, date);
+      }).then(loadAll).then(function () { renderQuotes(); msg(qs('[data-q="new"] [data-msg]', p), 'Citazione salvata.' + (date ? ' Yobalou Biss Bi di ' + fmtDate(date) + '.' : ''), 'ok'); })
+        .catch(function (e) { fail(box, e); });
     };
-    var del = qs('[data-del]', b); if (del) twoStep(del, function () { sb.from('quotes').delete().eq('id', id).then(function (r) { if (r.error) return fail(qs('[data-msg]', b), r.error); loadAll().then(renderQuotes); }); });
+    qsa('[data-img]', b).forEach(function (btn) { btn.onclick = function () {
+      var q = S.quotes.filter(function (x) { return x.id === id; })[0]; btn.disabled = true; msg(box, 'Preparo l\'immagine…');
+      D.shareQuoteImage(q, btn.dataset.img, dateOf(id)[0] || null).then(function () { btn.disabled = false; msg(box, ''); }, function (e) { btn.disabled = false; fail(box, e); });
+    }; });
+    var del = qs('[data-del]', b); if (del) twoStep(del, function () { sb.from('quotes').delete().eq('id', id).then(function (r) { if (r.error) return fail(box, r.error); return saveYob(id, null); }).then(loadAll).then(renderQuotes).catch(function (e) { fail(box, e); }); });
   });
 }
 

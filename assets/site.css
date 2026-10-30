@@ -405,3 +405,17 @@ footer.foot{background:var(--green-ink);color:#9fae9d;font-size:.86rem}
 .faq summary::after{content:"+";font-family:var(--body);font-size:1.5rem;color:var(--gold-deep);flex:none;transition:transform .2s}
 .faq[open] summary::after{transform:rotate(45deg)}
 .faq p{color:var(--muted);padding-bottom:1.2rem;max-width:66ch}
+
+/* ---------- Yobalou Biss Bi ---------- */
+.yb-sec{background:var(--green) var(--star) center/84px;color:var(--cream);padding-block:clamp(3rem,7vw,5rem)}
+.yb{max-width:820px;margin:0 auto;text-align:center;display:grid;gap:1rem;justify-items:center}
+.yb .wo{font-family:var(--display);font-style:italic;font-size:clamp(1.6rem,4vw,2.5rem);color:#fff;line-height:1.3}
+.yb .tr{color:var(--on-dark-muted);font-size:1.05rem;max-width:60ch}
+.yb cite{font-style:normal;color:var(--gold);font-size:.8rem;letter-spacing:.2em;text-transform:uppercase}
+.yb-arch{max-width:820px;margin:2.4rem auto 0;border-top:1px solid rgba(201,168,76,.3)}
+.yb-arch summary{cursor:pointer;padding:1rem 0;color:var(--gold2);font-weight:600;text-align:center}
+.yb-arch ol{list-style:none;margin:0;padding:0;display:grid;gap:1.4rem}
+.yb-arch li{display:grid;gap:.4rem;padding-bottom:1.4rem;border-bottom:1px solid rgba(201,168,76,.18)}
+.yb-arch .wo{font-family:var(--display);font-style:italic;font-size:1.25rem;color:#fff}
+.yb-arch .tr{color:var(--on-dark-muted);font-size:.95rem}
+.quote-band .eyebrow{color:var(--gold);margin-bottom:.4rem}
