@@ -87,7 +87,7 @@ P.home = function () {
     D.quotes().then(function (qs) {
       var yb = D.yobalou ? D.yobalou(cfg, qs)[0] : null, q = yb ? yb.q : qs[Math.floor(Math.random() * qs.length)];
       $('quote').innerHTML = (yb ? '<span class="eyebrow">Yobalou Biss Bi · ' + D.fridayLabel(yb.date) + '</span>' : '') +
-        '<p class="wo">“' + esc(q.text_wo || q.text_it) + '”</p>' + (q.text_wo ? '<p class="tr">' + t(q.text_it, q.text_fr) + '</p>' : '') + '<cite>' + esc(q.author || 'Mame Cheikh Ibrahima Fall') + '</cite>';
+        '<p class="wo">“' + esc(q.text_wo || q.text_it) + '”</p>' + (q.text_wo ? '<p class="tr">' + t(q.text_it, q.text_fr) + '</p>' : '') + (q.author ? '<cite>' + esc(q.author) + '</cite>' : '');
     });
     // Diayanté
     var dy = cfg.diayante;
@@ -228,7 +228,7 @@ P.citazioni = function () {
         var cur = yb[0], q = cur.q;
         box.hidden = false;
         box.innerHTML = '<div class="wrap"><div class="yb"><span class="eyebrow">Yobalou Biss Bi · ' + D.fridayLabel(cur.date) + '</span>' +
-          '<p class="wo">“' + esc(q.text_wo || q.text_it) + '”</p>' + (q.text_wo ? '<p class="tr">' + t(q.text_it, q.text_fr) + '</p>' : '') + '<cite>' + esc(q.author || 'Mame Cheikh Ibrahima Fall') + '</cite>' +
+          '<p class="wo">“' + esc(q.text_wo || q.text_it) + '”</p>' + (q.text_wo ? '<p class="tr">' + t(q.text_it, q.text_fr) + '</p>' : '') + (q.author ? '<cite>' + esc(q.author) + '</cite>' : '') +
           '<div class="actions" style="justify-content:center"><button type="button" class="btn" data-img="post">' + t('Immagine per i post', 'Image pour les posts') + '</button><button type="button" class="btn ghost" data-img="story">' + t('Immagine per le storie', 'Image pour les stories') + '</button></div></div>' +
           (yb.length > 1 ? '<details class="yb-arch"><summary>' + t('I venerdì passati', 'Les vendredis passés') + ' (' + (yb.length - 1) + ')</summary><ol>' + yb.slice(1).map(function (x) {
             return '<li><span class="eyebrow">' + D.fridayLabel(x.date) + '</span><p class="wo">“' + esc(x.q.text_wo || x.q.text_it) + '”</p>' + (x.q.text_wo ? '<p class="tr">' + t(x.q.text_it, x.q.text_fr) + '</p>' : '') + '</li>';
@@ -237,11 +237,11 @@ P.citazioni = function () {
       }
       $('quotes').innerHTML = qs.map(function (q, i) {
         return '<article class="q rv"><p class="wo">“' + esc(q.text_wo || q.text_it) + '”</p>' + (q.text_wo ? '<p class="tr">' + t(q.text_it, q.text_fr) + '</p>' : '') +
-          '<footer><cite>' + esc(q.author || 'Mame Cheikh Ibrahima Fall') + '</cite><button type="button" data-i="' + i + '">' + t('Copia', 'Copier') + '</button></footer></article>';
+          '<footer><cite>' + esc(q.author || '') + '</cite><button type="button" data-i="' + i + '">' + t('Copia', 'Copier') + '</button></footer></article>';
       }).join('');
       $('quotes').addEventListener('click', function (e) {
         var b = e.target.closest('button'); if (!b) return; var q = qs[+b.dataset.i];
-        var txt = '“' + (q.text_wo || '') + '”\n' + D.L(q.text_it, q.text_fr) + '\n— ' + (q.author || 'Mame Cheikh Ibrahima Fall') + '\n\nDahira Touba Fano';
+        var txt = '“' + (q.text_wo || '') + '”\n' + D.L(q.text_it, q.text_fr) + (q.author ? '\n— ' + q.author : '') + '\n\nDahira Touba Fano';
         if (navigator.share) navigator.share({text: txt}).catch(function () { D.copy(txt, D.L('Citazione copiata', 'Citation copiée')); }); else D.copy(txt, D.L('Citazione copiata', 'Citation copiée'));
       });
       D.reveal();

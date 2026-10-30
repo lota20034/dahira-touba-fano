@@ -63,7 +63,7 @@ D.quoteImage = function (q, fmt, iso) {
     if (q.text_fr) { y += 30; draw(fr, 'italic 400 {s}px Inter, sans-serif', '#c2ccbf'); }
     // autore e firma
     x.fillStyle = '#c9a84c'; x.font = '600 26px Inter, sans-serif';
-    x.fillText((q.author || 'Mame Cheikh Ibrahima Fall').toUpperCase().split('').join(' ').replace(/ {3}/g, '   '), cx, bottom + 20);
+    if (q.author) x.fillText(q.author.toUpperCase().split('').join(' '), cx, bottom + 20);
     x.fillStyle = '#e8d5a3'; x.font = '700 34px "Playfair Display", Georgia, serif';
     x.fillText('Dahira Touba Fano', cx, H - (fmt === 'story' ? 190 : 110));
     x.fillStyle = '#c2ccbf'; x.font = '400 22px Inter, sans-serif';
