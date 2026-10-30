@@ -54,6 +54,12 @@ function upload(blob, folder) {
     return {path: path, url: sb.storage.from(BUCKET).getPublicUrl(path).data.publicUrl};
   });
 }
+// anteprima del link (WhatsApp/Telegram/Facebook): gallery/citazioni/<id>.jpg, sovrascritta a ogni salvataggio
+function quotePreview(q, iso) {
+  return D.quoteOg(q, iso).then(function (b) {
+    return sb.storage.from(BUCKET).upload('citazioni/' + q.id + '.jpg', b, {contentType: 'image/jpeg', cacheControl: '600', upsert: true});
+  }).then(function (r) { if (r.error) throw r.error; });
+}
 function removeFiles(paths) { paths = paths.filter(Boolean); return paths.length ? sb.storage.from(BUCKET).remove(paths) : Promise.resolve(); }
 
 /* ---------------- Dati ---------------- */
@@ -335,18 +341,26 @@ function renderQuotes() {
       '<div class="row"><label class="f">Traduzione italiana<textarea data-k="text_it" style="min-height:70px">' + esc(q.text_it) + '</textarea></label><label class="f">Traduzione francese<textarea data-k="text_fr" style="min-height:70px">' + esc(q.text_fr) + '</textarea></label></div>' +
       '<div class="row"><label class="f">Autore<small>Chi ha detto o scritto la frase. Vuoto = nessun nome.</small><input data-k="author" value="' + esc(q.id ? q.author : 'Dahira Touba Fano') + '" placeholder="es. Mame Cheikh Ibrahima Fall"></label><label class="f">Posizione<small>1 = la prima della pagina.</small><input data-k="order_index" type="number" inputmode="numeric" value="' + esc(q.order_index != null ? q.order_index : S.quotes.length + 1) + '"></label>' +
       '<label class="f">Yobalou Biss Bi del venerdì<small>Scegli il venerdì in cui deve uscire. Vuoto = citazione normale.</small><input data-yob type="date" value="' + esc(q.id ? (ds[0] || '') : nextFriday()) + '"></label></div>' +
-      '<div class="bar"><button class="b gold" data-save type="button">' + (q.id ? 'Salva' : 'Aggiungi la citazione') + '</button>' + (q.id ? '<button class="b line sm" data-img="post" type="button">Immagine post 4:5</button><button class="b line sm" data-img="story" type="button">Immagine storia 9:16</button><button class="b red" data-del type="button">Elimina</button>' : '') + '</div><div data-msg></div></div>';
+      '<div class="bar"><button class="b gold" data-save type="button">' + (q.id ? 'Salva' : 'Aggiungi la citazione') + '</button>' + (q.id ? '<button class="b line sm" data-img="post" type="button">Immagine post 4:5</button><button class="b line sm" data-img="story" type="button">Immagine storia 9:16</button><a class="b line sm" href="citazione.html?id=' + encodeURIComponent(q.id) + '" target="_blank" rel="noopener">Pagina di condivisione ↗</a><button class="b red" data-del type="button">Elimina</button>' : '') + '</div><div data-msg></div></div>';
   }
   p.innerHTML =
     '<div class="box"><h2>Yobalou Biss Bi</h2>' + (cur ? '<p>Questa settimana (' + fmtDate(cur.date) + '): <strong>“' + esc(cur.q.text_wo || cur.q.text_it) + '”</strong></p>' : '<p class="hint">Nessun Yobalou Biss Bi ancora: aggiungi una citazione e scegli il venerdì. Finché non ce n\'è uno, in home esce una citazione a caso.</p>') +
     (future.length ? '<p class="hint">Già programmati: ' + future.map(fmtDate).join(' · ') + '</p>' : '') +
-    '<p class="hint">Ogni Yobalou Biss Bi compare da solo il suo venerdì in home e in cima alla pagina Citazioni; quelli passati restano nell\'archivio. Con “Immagine post / storia” scarichi il post già pronto per Instagram, TikTok e WhatsApp (dal telefono si apre direttamente la condivisione).</p></div>' +
+    '<p class="hint">Ogni Yobalou Biss Bi compare da solo il suo venerdì in home e in cima alla pagina Citazioni; quelli passati restano nell\'archivio. Con “Immagine post / storia” scarichi il post già pronto per Instagram, TikTok e WhatsApp (dal telefono si apre direttamente la condivisione).</p>' +
+    '<p class="hint">Ogni citazione ha il suo link breve (<b>' + esc(location.host) + '/q/…</b>): su WhatsApp mostra l\'anteprima con l\'immagine e porta alla pagina dove chiunque sceglie le frasi e la condivide. L\'anteprima si prepara da sola quando salvi; per quelle già scritte tocca qui sotto una volta.</p>' +
+    '<div class="bar"><button class="b line" data-prevall type="button">Prepara le anteprime di tutte le citazioni</button></div><div data-prevmsg></div></div>' +
     form(null) + S.quotes.map(function (q, i) { return form(q, i); }).join('');
   function saveYob(id, date) {
     Object.keys(yob).forEach(function (d) { if (yob[d] === id && d !== date) delete yob[d]; });
     if (date) yob[date] = id;
     return sb.from('settings').upsert({key: 'yobalou', value: yob, updated_at: new Date().toISOString()}).then(function (r) { if (r.error) throw r.error; S.settings.yobalou = yob; });
   }
+  qs('[data-prevall]', p).onclick = function () {
+    var btn = this, box = qs('[data-prevmsg]', p), list = S.quotes.slice(), done = 0; btn.disabled = true;
+    list.reduce(function (pr, q) { return pr.then(function () { msg(box, 'Preparo ' + (done + 1) + ' di ' + list.length + '…'); return quotePreview(q, dateOf(q.id).filter(function (d) { return d <= D.today(); })[0] || null).then(function () { done++; }); }); }, Promise.resolve())
+      .then(function () { btn.disabled = false; msg(box, 'Fatto: ' + done + ' anteprime pronte. Su WhatsApp possono servire alcuni minuti per vederle aggiornate.', 'ok'); })
+      .catch(function (e) { btn.disabled = false; fail(box, e); });
+  };
   qsa('[data-q]', p).forEach(function (b) {
     var id = b.dataset.q, box = qs('[data-msg]', b);
     qs('[data-save]', b).onclick = function () {
@@ -358,7 +372,8 @@ function renderQuotes() {
       if (date && new Date(date + 'T12:00:00').getDay() !== 5 && !b.dataset.okday) { b.dataset.okday = 1; return msg(box, 'Attenzione: ' + fmtDate(date) + ' non è un venerdì. Tocca di nuovo “Salva” se va bene lo stesso.', 'err'); }
       msg(box, 'Salvataggio…');
       (id === 'new' ? sb.from('quotes').insert(row).select().single() : sb.from('quotes').update(row).eq('id', id).select().single()).then(function (r) {
-        if (r.error) throw r.error; return saveYob(r.data.id, date);
+        if (r.error) throw r.error; var saved = r.data;
+        return saveYob(saved.id, date).then(function () { return quotePreview(saved, date && date <= D.today() ? date : null).catch(function (e) { console.warn('anteprima', e); }); });
       }).then(loadAll).then(function () { renderQuotes(); msg(qs('[data-q="new"] [data-msg]', p), 'Citazione salvata.' + (date ? ' Yobalou Biss Bi di ' + fmtDate(date) + '.' : ''), 'ok'); })
         .catch(function (e) { fail(box, e); });
     };

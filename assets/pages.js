@@ -87,7 +87,8 @@ P.home = function () {
     D.quotes().then(function (qs) {
       var yb = D.yobalou ? D.yobalou(cfg, qs)[0] : null, q = yb ? yb.q : qs[Math.floor(Math.random() * qs.length)];
       $('quote').innerHTML = (yb ? '<span class="eyebrow">Yobalou Biss Bi · ' + D.fridayLabel(yb.date) + '</span>' : '') +
-        '<p class="wo">“' + esc(q.text_wo || q.text_it) + '”</p>' + (q.text_wo ? '<p class="tr">' + t(q.text_it, q.text_fr) + '</p>' : '') + (q.author ? '<cite>' + esc(q.author) + '</cite>' : '');
+        '<p class="wo">“' + esc(q.text_wo || q.text_it) + '”</p>' + (q.text_wo ? '<p class="tr">' + t(q.text_it, q.text_fr) + '</p>' : '') + (q.author ? '<cite>' + esc(q.author) + '</cite>' : '') +
+        '<a class="q-share on" href="citazione.html?id=' + encodeURIComponent(q.id) + '">' + t('Condividi', 'Partager') + '</a>';
     });
     // Diayanté
     var dy = cfg.diayante;
@@ -229,22 +230,111 @@ P.citazioni = function () {
         box.hidden = false;
         box.innerHTML = '<div class="wrap"><div class="yb"><span class="eyebrow">Yobalou Biss Bi · ' + D.fridayLabel(cur.date) + '</span>' +
           '<p class="wo">“' + esc(q.text_wo || q.text_it) + '”</p>' + (q.text_wo ? '<p class="tr">' + t(q.text_it, q.text_fr) + '</p>' : '') + (q.author ? '<cite>' + esc(q.author) + '</cite>' : '') +
-          '<div class="actions" style="justify-content:center"><button type="button" class="btn" data-img="post">' + t('Immagine per i post', 'Image pour les posts') + '</button><button type="button" class="btn ghost" data-img="story">' + t('Immagine per le storie', 'Image pour les stories') + '</button></div></div>' +
+          '<div class="actions" style="justify-content:center"><a class="btn" href="citazione.html?id=' + encodeURIComponent(q.id) + '">' + t('Condividi su Instagram e WhatsApp', 'Partager sur Instagram et WhatsApp') + '</a></div></div>' +
           (yb.length > 1 ? '<details class="yb-arch"><summary>' + t('I venerdì passati', 'Les vendredis passés') + ' (' + (yb.length - 1) + ')</summary><ol>' + yb.slice(1).map(function (x) {
             return '<li><span class="eyebrow">' + D.fridayLabel(x.date) + '</span><p class="wo">“' + esc(x.q.text_wo || x.q.text_it) + '”</p>' + (x.q.text_wo ? '<p class="tr">' + t(x.q.text_it, x.q.text_fr) + '</p>' : '') + '</li>';
           }).join('') + '</ol></details>' : '') + '</div>';
-        box.addEventListener('click', function (e) { var b = e.target.closest('[data-img]'); if (!b) return; b.disabled = true; D.shareQuoteImage(q, b.dataset.img, cur.date).then(function () { b.disabled = false; }); });
       }
       $('quotes').innerHTML = qs.map(function (q, i) {
         return '<article class="q rv"><p class="wo">“' + esc(q.text_wo || q.text_it) + '”</p>' + (q.text_wo ? '<p class="tr">' + t(q.text_it, q.text_fr) + '</p>' : '') +
-          '<footer><cite>' + esc(q.author || '') + '</cite><button type="button" data-i="' + i + '">' + t('Copia', 'Copier') + '</button></footer></article>';
+          '<footer><cite>' + esc(q.author || '') + '</cite><a class="q-share" href="citazione.html?id=' + encodeURIComponent(q.id) + '">' + t('Condividi', 'Partager') + '</a></footer></article>';
       }).join('');
-      $('quotes').addEventListener('click', function (e) {
-        var b = e.target.closest('button'); if (!b) return; var q = qs[+b.dataset.i];
-        var txt = '“' + (q.text_wo || '') + '”\n' + D.L(q.text_it, q.text_fr) + (q.author ? '\n— ' + q.author : '') + '\n\nDahira Touba Fano';
-        if (navigator.share) navigator.share({text: txt}).catch(function () { D.copy(txt, D.L('Citazione copiata', 'Citation copiée')); }); else D.copy(txt, D.L('Citazione copiata', 'Citation copiée'));
-      });
       D.reveal();
+    });
+  });
+};
+
+/* ---------- Condividi una citazione (come i testi delle canzoni su Spotify) ---------- */
+P.citazione = function () {
+  var id = new URLSearchParams(location.search).get('id');
+  D.ready.then(function (r) {
+    D.quotes().then(function (qs) {
+      var q = qs.filter(function (x) { return String(x.id) === id; })[0];
+      var yb = D.yobalou(r.cfg, qs);
+      if (!q) q = (yb[0] && yb[0].q) || qs[0];
+      if (!q) { $('qsApp').innerHTML = '<p>' + t('Citazione non trovata.', 'Citation introuvable.') + ' <a href="citazioni.html">' + t('Tutte le citazioni', 'Toutes les citations') + '</a></p>'; return; }
+      id = q.id;
+      var ybMatch = yb.filter(function (x) { return x.q === q; })[0];
+      var iso = ybMatch ? ybMatch.date : null, link = D.quoteLink(id);
+      var st = {fmt: 'story', theme: 'verde', on: {}}, LANGS = [['wo', 'Wolof'], ['it', 'Italiano'], ['fr', 'Français']];
+      var parts = {};
+      LANGS.forEach(function (l) { parts[l[0]] = D.sentences(q['text_' + l[0]]); parts[l[0]].forEach(function (_, k) { st.on[l[0] + k] = true; }); });
+      // testo della pagina
+      $('qsEye').innerHTML = iso ? 'Yobalou Biss Bi · ' + D.fridayLabel(iso) : 'Kàddu';
+      $('qsImg').alt = '“' + (q.text_wo || q.text_it) + '”' + (q.text_wo ? ' — ' + D.L(q.text_it, q.text_fr) : '');
+      document.title = '“' + (q.text_wo || q.text_it).slice(0, 60) + '” | Dahira Touba Fano';
+      // le frasi da scegliere
+      $('qsParts').innerHTML = LANGS.filter(function (l) { return parts[l[0]].length; }).map(function (l) {
+        return '<div class="qs-lang"><span class="qs-lab">' + l[1] + '</span><div class="qs-chips">' + parts[l[0]].map(function (p, k) {
+          return '<button type="button" class="qs-chip ' + l[0] + '" data-p="' + l[0] + k + '" aria-pressed="true">' + esc(p.trim()) + '</button>';
+        }).join('') + '</div></div>';
+      }).join('');
+      function pick(l) {
+        var out = [], gap = false;
+        parts[l].forEach(function (p, k) { if (st.on[l + k]) { out.push((gap && out.length ? '… ' : '') + p.trim()); gap = false; } else gap = true; });
+        return out.join(' ');
+      }
+      function opts() { return {theme: st.theme, wo: pick('wo'), it: pick('it'), fr: pick('fr')}; }
+      var url = null, timer = null, busy = 0;
+      function draw() {
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          var n = ++busy; $('qsPrev').classList.add('wait');
+          D.quoteImage(q, st.fmt, iso, opts()).then(function (b) {
+            if (n !== busy) return;
+            if (url) URL.revokeObjectURL(url);
+            url = URL.createObjectURL(b);
+            $('qsImg').src = url; $('qsPrev').classList.remove('wait'); $('qsPrev').dataset.fmt = st.fmt; $('qsWa').href = 'https://wa.me/?text=' + encodeURIComponent(shareText());
+          });
+        }, 90);
+      }
+      $('qsParts').addEventListener('click', function (e) {
+        var b = e.target.closest('[data-p]'); if (!b) return;
+        var k = b.dataset.p, left = Object.keys(st.on).filter(function (x) { return st.on[x]; }).length;
+        if (st.on[k] && left === 1) return D.toast(D.L('Lascia almeno una frase', 'Garde au moins une phrase'));
+        st.on[k] = !st.on[k]; b.setAttribute('aria-pressed', st.on[k]); draw();
+      });
+      function seg(boxId, key) {
+        $(boxId).addEventListener('click', function (e) {
+          var b = e.target.closest('button'); if (!b) return;
+          st[key] = b.dataset.v;
+          [].forEach.call(this.querySelectorAll('button'), function (x) { x.setAttribute('aria-pressed', x === b); });
+          draw();
+        });
+      }
+      seg('qsTheme', 'theme'); seg('qsFmt', 'fmt');
+      $('qsAll').onclick = function () {
+        Object.keys(st.on).forEach(function (k) { st.on[k] = true; });
+        [].forEach.call(document.querySelectorAll('.qs-chip'), function (x) { x.setAttribute('aria-pressed', 'true'); });
+        draw();
+      };
+      // condivisione
+      function shareText() { var o = opts(); return '“' + (o.wo || o.it || o.fr) + '”\n' + link; }
+      function file() { return D.quoteImage(q, st.fmt, iso, opts()).then(function (b) { return new File([b], 'dahira-touba-fano-' + (iso || 'kaddu') + '-' + st.fmt + '.jpg', {type: 'image/jpeg'}); }); }
+      function save(f) { var a = document.createElement('a'); a.href = URL.createObjectURL(f); a.download = f.name; document.body.appendChild(a); a.click(); a.remove(); }
+      function copyLink() { try { navigator.clipboard.writeText(link).catch(function () {}); } catch (e) {} }
+      $('qsShare').onclick = function () {
+        var btn = this; btn.disabled = true; copyLink();
+        file().then(function (f) {
+          var data = {files: [f], text: shareText()};
+          if (navigator.canShare && navigator.canShare(data)) return navigator.share(data).catch(function () {});
+          save(f); D.toast(D.L('Immagine scaricata e link copiato', 'Image téléchargée et lien copié'));
+        }).then(function () { btn.disabled = false; });
+      };
+      $('qsIg').onclick = function () {
+        var btn = this; btn.disabled = true; copyLink();
+        file().then(function (f) {
+          $('qsIgTip').hidden = false;
+          if (navigator.canShare && navigator.canShare({files: [f]})) return navigator.share({files: [f]}).catch(function () {});
+          save(f);
+        }).then(function () { btn.disabled = false; });
+      };
+      $('qsWa').href = 'https://wa.me/?text=' + encodeURIComponent(shareText());
+      $('qsWa').onclick = function () { this.href = 'https://wa.me/?text=' + encodeURIComponent(shareText()); };
+      $('qsCopy').onclick = function () { D.copy(link, D.L('Link copiato', 'Lien copié')); };
+      $('qsDl').onclick = function () { file().then(save); };
+      $('qsLink').textContent = link.replace(/^https?:\/\//, '');
+      draw(); D.reveal();
     });
   });
 };
