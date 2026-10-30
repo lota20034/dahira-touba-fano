@@ -1,0 +1,19 @@
+# Seconda protezione: anche GitHub "visita" il database ogni giorno,
+# così il progetto Supabase gratuito non va mai in pausa.
+name: Supabase keepalive
+on:
+  schedule:
+    - cron: '23 5 * * *'
+  workflow_dispatch:
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Visita il database
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" \
+            "https://elgzwgudzwqrrzygfpkp.supabase.co/rest/v1/gallery_photos?select=id&limit=1" \
+            -H "apikey: sb_publishable_5rREEvJSaB4fLXNLSabFPQ_ooWsJEWH" \
+            -H "Authorization: Bearer sb_publishable_5rREEvJSaB4fLXNLSabFPQ_ooWsJEWH")
+          echo "Risposta Supabase: $code"
+          test "$code" = "200"
