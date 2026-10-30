@@ -5,7 +5,7 @@ description: Prepara un video e lo inserisce nella pagina del sito (galleria.htm
 
 # Video nel sito
 
-1. Prima leggi `galleria.html`, `common.js` e `style.css` (NON leggere `imgs.js` per intero: contiene immagini base64 enormi, usa grep/head) e segui la struttura esistente (la galleria usa un lightbox per le immagini): non introdurre framework.
+1. Il modo più semplice: carica il video su YouTube e aggiungi il link dal pannello admin (Foto e album → Aggiungi un video YouTube): compare da solo nell'album e nella pagina Media. Se serve un video caricato sul sito, leggi prima `galleria.html`, `assets/app.js` e `assets/site.css` e segui la struttura esistente (lightbox in `DTF.lightbox`): non introdurre framework.
 2. Ottimizza il video con la skill `video-compress` (MP4 H.264, `+faststart`) e crea il poster con `video-thumbnail`. Metti i file nella stessa cartella degli altri media del sito.
 3. Markup base:
    ```html

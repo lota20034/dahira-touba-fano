@@ -1,161 +1,94 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Eventi | Dahira Touba Fano - Keur Serigne Touba Fano</title>
-<meta name="description" content="Tutti gli eventi del Dahira Touba Fano: Magal Touba, Kourel Xassida, dhikr settimanali. Ogni sabato a Keur Serigne Touba Fano, Monterado (AN).">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Eventi | Dahira Touba Fano · Keur Serigne Touba Fano</title>
+<meta name="description" content="Gli eventi della Dahira Touba Fano: Magal, Laylat al-Qadr, Ngontoum Xassida, dahira generale. Prossimi appuntamenti, programma del sabato e album delle foto.">
 <link rel="canonical" href="https://dahira-khadaikhoul-fadaili.netlify.app/eventi.html">
 <meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#0e2a14">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link rel="manifest" href="manifest.json">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Dahira Touba Fano">
 <meta property="og:locale" content="it_IT">
 <meta property="og:locale:alternate" content="fr_FR">
-<meta property="og:title" content="Eventi | Dahira Touba Fano - Keur Serigne Touba Fano">
-<meta property="og:description" content="Tutti gli eventi del Dahira Touba Fano: Magal Touba, Kourel Xassida, dhikr settimanali. Ogni sabato a Keur Serigne Touba Fano, Monterado (AN).">
+<meta property="og:title" content="Eventi | Dahira Touba Fano · Keur Serigne Touba Fano">
+<meta property="og:description" content="Gli eventi della Dahira Touba Fano: Magal, Laylat al-Qadr, Ngontoum Xassida, dahira generale. Prossimi appuntamenti, programma del sabato e album delle foto.">
 <meta property="og:url" content="https://dahira-khadaikhoul-fadaili.netlify.app/eventi.html">
-<meta property="og:image" content="https://dahira-khadaikhoul-fadaili.netlify.app/favicon.png">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Eventi | Dahira Touba Fano - Keur Serigne Touba Fano">
-<meta name="twitter:description" content="Tutti gli eventi del Dahira Touba Fano: Magal Touba, Kourel Xassida, dhikr settimanali. Ogni sabato a Keur Serigne Touba Fano, Monterado (AN).">
-<meta name="twitter:image" content="https://dahira-khadaikhoul-fadaili.netlify.app/favicon.png">
-<link rel="icon" type="image/png" href="favicon.png">
+<meta property="og:image" content="https://dahira-khadaikhoul-fadaili.netlify.app/img/og.jpg">
+<meta property="og:image:width" content="900">
+<meta property="og:image:height" content="900">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Eventi | Dahira Touba Fano · Keur Serigne Touba Fano">
+<meta name="twitter:description" content="Gli eventi della Dahira Touba Fano: Magal, Laylat al-Qadr, Ngontoum Xassida, dahira generale. Prossimi appuntamenti, programma del sabato e album delle foto.">
+<meta name="twitter:image" content="https://dahira-khadaikhoul-fadaili.netlify.app/img/og.jpg">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "Dahira Touba Fano",
+     "item": "https://dahira-khadaikhoul-fadaili.netlify.app/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "Eventi",
+     "item": "https://dahira-khadaikhoul-fadaili.netlify.app/eventi.html"
+    }
+   ]
+  },
+  {
+   "@id": "https://dahira-khadaikhoul-fadaili.netlify.app/#org",
+   "@type": "ReligiousOrganization",
+   "name": "Dahira Touba Fano",
+   "url": "https://dahira-khadaikhoul-fadaili.netlify.app/"
+  }
+ ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
-<style>
-.events-list{padding:5rem 5%;}
-.event-row{display:grid;grid-template-columns:110px 1fr auto;gap:2rem;align-items:center;padding:1.8rem 0;border-bottom:1px solid var(--line);}
-.event-row:first-child{border-top:1px solid var(--line);}
-.ev-date{font-family:'Playfair Display',serif;color:var(--gold);font-size:1.1rem;line-height:1.2;}
-.ev-date small{display:block;font-family:'Inter',sans-serif;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);}
-.ev-title{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--green);margin-bottom:.3rem;}
-.ev-desc{font-size:.83rem;color:var(--grey);line-height:1.6;}
-.ev-badge{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;border:1px solid var(--gold);color:var(--gold);padding:.3rem .8rem;border-radius:20px;white-space:nowrap;}
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://elgzwgudzwqrrzygfpkp.supabase.co" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-.archive-sec{background:var(--cream);padding:5rem 5%;}
-.archive-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:2.5rem;}
-.archive-card{background:#fff;border:1px solid var(--line);overflow:hidden;transition:all .3s;}
-.archive-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.1);}
-.archive-card img{width:100%;height:320px;object-fit:cover;object-position:top;}
-.archive-card-label{padding:1rem 1.2rem;font-size:.82rem;color:var(--grey);}
-.archive-card-label strong{display:block;color:var(--green);font-size:.92rem;margin-bottom:.2rem;}
-
-.weekly-sec{background:var(--green);padding:5rem 5%;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
-.weekly-sec h2{color:#fff;}
-.weekly-sec .eyebrow{color:var(--gold2);}
-.weekly-sec p{color:rgba(255,255,255,.75);line-height:1.7;margin-bottom:1rem;font-size:.93rem;}
-.map-placeholder{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:3rem 2rem;text-align:center;color:rgba(255,255,255,.5);font-size:.85rem;}
-@media(max-width:860px){.event-row{grid-template-columns:1fr;gap:.5rem;}.ev-badge{display:none;}.archive-grid{grid-template-columns:1fr 1fr;}.weekly-sec{grid-template-columns:1fr;}}
-</style>
-<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="assets/site.css?v=2">
 </head>
 <body>
-<nav id="nav"></nav>
-<div style="height:84px"></div>
+<a href="#main" class="skip" style="position:absolute;left:-9999px">Vai al contenuto</a>
+<header id="top" class="top"><div class="wrap"><a class="brand" href="index.html"><img src="img/logo-192.webp" alt="" width="40" height="40"><span><b>Dahira Touba Fano</b><small>Keur Serigne Touba</small></span></a></div></header>
+<section class="page-head"><img class="bg" src="img/foto/june2_3.webp" alt="" fetchpriority="high"><div class="wrap">
+<span class="eyebrow" style="color:var(--gold)"><span data-it>Agenda della dahira</span><span data-fr>Agenda de la dahira</span></span>
+<h1><span data-it>Eventi e incontri</span><span data-fr>Événements et rencontres</span></h1>
+<p><span data-it>I prossimi appuntamenti, gli incontri di ogni settimana e l’archivio con le foto di ogni evento.</span><span data-fr>Les prochains rendez-vous, les réunions de chaque semaine et les archives avec les photos de chaque événement.</span></p>
+</div></section>
 
-<div class="page-hero">
-  <div class="page-hero-bg" id="heroImg"></div>
-  <div class="page-hero-ov"></div>
-  <div class="page-hero-content">
-    <span class="eyebrow" data-it>Calendario 2026</span>
-    <span class="eyebrow" data-fr>Calendrier 2026</span>
-    <h1 data-it>Eventi & Incontri</h1>
-    <h1 data-fr>Événements & Rencontres</h1>
-  </div>
-</div>
-
-<div class="events-list">
-  <span class="eyebrow" data-it>Prossimi appuntamenti</span>
-  <span class="eyebrow" data-fr>Prochains rendez-vous</span>
-  <h2 class="section-title" data-it>Agenda del Dahira</h2>
-  <h2 class="section-title" data-fr>Agenda du Dahira</h2>
-  <div class="divider"></div>
-
-  <div class="event-row">
-    <div class="ev-date"><small data-it>Ogni venerdì</small><small data-fr>Chaque vendredi</small></div>
-    <div><div class="ev-title">Yobalu Aljuma</div><div class="ev-desc" data-it>Lettura della Surah Al-Kahf ogni venerdì mattina — pratica settimanale della comunità.</div><div class="ev-desc" data-fr>Lecture de la Sourate Al-Kahf chaque vendredi matin — pratique hebdomadaire de la communauté.</div></div>
-    <span class="ev-badge" data-it>Settimanale</span><span class="ev-badge" data-fr>Hebdomadaire</span>
-  </div>
-
-  <div class="event-row">
-    <div class="ev-date"><small data-it>Ogni sabato · 15:00</small><small data-fr>Chaque samedi · 15h</small></div>
-    <div><div class="ev-title" data-it>Dahira Generale</div><div class="ev-title" data-fr>Dahira Général</div><div class="ev-desc" data-it>Al Quran Ak Durus · Kourèl Xassida · Takusàn · Kourèl Zikroulah · Waxtàne Ak Sognè — Via dell'Artigianato, Monterado (AN)</div><div class="ev-desc" data-fr>Al Quran Ak Durus · Kourèl Xassida · Takusàn · Kourèl Zikroulah · Waxtàne Ak Sognè — Via dell'Artigianato, Monterado (AN)</div></div>
-    <span class="ev-badge" data-it>Ricorrente</span><span class="ev-badge" data-fr>Récurrent</span>
-  </div>
-
-  <div id="dynamicEvents"></div>
-</div>
-
-<!-- ARCHIVIO LOCANDINE -->
-<div class="archive-sec">
-  <span class="eyebrow" data-it>Archivio</span>
-  <span class="eyebrow" data-fr>Archives</span>
-  <h2 class="section-title" data-it>Eventi passati</h2>
-  <h2 class="section-title" data-fr>Événements passés</h2>
-  <div class="archive-grid" id="archiveGrid"></div>
-</div>
-
-<!-- DOVE SIAMO -->
-<div class="weekly-sec">
-  <div>
-    <span class="eyebrow" data-it>Ogni sabato</span>
-    <span class="eyebrow" data-fr>Chaque samedi</span>
-    <h2 class="section-title" style="color:#fff" data-it>Vieni a trovarci</h2>
-    <h2 class="section-title" style="color:#fff" data-fr>Rejoignez-nous</h2>
-    <div class="divider"></div>
-    <p data-it>Gli incontri si svolgono ogni sabato a partire dalle ore 15:00. Tutti sono benvenuti — portate il vostro cuore aperto e la voglia di stare insieme nella fede.</p>
-    <p data-fr>Les réunions se tiennent chaque samedi à partir de 15h00. Tous sont les bienvenus — apportez votre cœur ouvert et l'envie d'être ensemble dans la foi.</p>
-    <p style="color:rgba(255,255,255,.75);font-size:.88rem">Via dell'Artigianato, Monterado (AN), Italia</p>
-    <br>
-    <a href="https://maps.google.com/?q=Via+dell'Artigianato+Ponte+Rio+PU" target="_blank" class="btn btn-gold" data-it>Apri su Google Maps</a>
-    <a href="https://maps.google.com/?q=Via+dell'Artigianato+Ponte+Rio+PU" target="_blank" class="btn btn-gold" data-fr>Ouvrir sur Google Maps</a>
-  </div>
-  <div class="map-placeholder" data-it>Via dell'Artigianato<br>Monterado (AN)<br><br>Keur Serigne Touba Fano</div>
-  <div class="map-placeholder" data-fr>Via dell'Artigianato<br>Monterado (AN)<br><br>Keur Serigne Touba Fano</div>
-</div>
-
-<footer id="footer"></footer>
-<script src="imgs.js"></script><script src="common.js"></script>
-<script>
-document.getElementById('heroImg').style.backgroundImage=`url(${IMGS['june2_3']})`;
-// Eventi dinamici da Supabase
-async function loadDynamicEvents(){
-  const container=document.getElementById('dynamicEvents');
-  const { data, error } = await sb.from('events').select('*').order('event_date',{ascending:true});
-  if(error || !data) return;
-  const today=new Date().toISOString().slice(0,10);
-  data.filter(ev=>ev.event_date>=today).forEach(ev=>{
-    const d=new Date(ev.event_date+'T00:00:00');
-    const day=d.getDate();
-    const monthIt=d.toLocaleDateString('it-IT',{month:'long',year:'numeric'});
-    const monthFr=d.toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
-    const row=document.createElement('div');
-    row.className='event-row';
-    row.innerHTML=`<div class="ev-date">${day}<small>${monthIt}</small></div>
-      <div><div class="ev-title">${ev.title_it||ev.title_fr||''}</div>
-      <div class="ev-desc">${ev.desc_it||''}${ev.location?' — '+ev.location:''}</div></div>
-      <span class="ev-badge">Evento</span>`;
-    container.appendChild(row);
-  });
-}
-loadDynamicEvents();
-// Archivio locandine
-const locs=[
-  {key:'loc1',label:'Dahira Generale — 25 Aprile 2026'},
-  {key:'loc2',label:'Dahira Generale con S. Mamour Ndao'},
-  {key:'loc3',label:'Assemblea Generale — 2 Maggio 2026'},
-  {key:'loc4',label:'Preghiera Eid — 27 Maggio 2026'},
-  {key:'loc5',label:'Yobalu Aljuma'},
-  {key:'loc6',label:'Ngontoum Xassida — 13 Giugno 2026'},
-  {key:'loc7',label:'Ngontoum Xassida con S. Mandack Gakou'},
-];
-const grid=document.getElementById('archiveGrid');
-locs.forEach(l=>{
-  grid.innerHTML+=`<div class="archive-card"><img src="${IMGS[l.key]}" alt="${l.label}"><div class="archive-card-label"><strong>${l.label}</strong></div></div>`;
-});
-initNav('eventi.html',false);initFooter();initLang();
-</script>
-<script src="theme.js"></script>
-</body></html>
+<main id="main">
+<section class="block"><div class="wrap">
+  <div class="head"><span class="eyebrow"><span data-it>Prossimamente</span><span data-fr>Prochainement</span></span><h2><span data-it>Prossimi eventi</span><span data-fr>Prochains événements</span></h2></div>
+  <div class="ev-list" id="upcoming"><div class="skel" style="height:96px"></div></div>
+</div></section>
+<section class="block" style="background:var(--paper)"><div class="wrap">
+  <div class="head"><span class="eyebrow"><span data-it>Ogni settimana</span><span data-fr>Chaque semaine</span></span><h2><span data-it>Gli appuntamenti fissi</span><span data-fr>Les rendez-vous fixes</span></h2><p><span data-it>Tutti sono benvenuti: portate il vostro cuore aperto e la voglia di stare insieme nella fede.</span><span data-fr>Tout le monde est le bienvenu : apportez votre cœur ouvert et l’envie d’être ensemble dans la foi.</span></p></div>
+  <div class="week" id="week"></div>
+</div></section>
+<section class="block on-dark pattern"><div class="wrap">
+  <div class="head"><span class="eyebrow"><span data-it>Archivio</span><span data-fr>Archives</span></span><h2><span data-it>Eventi passati</span><span data-fr>Événements passés</span></h2><p><span data-it>Tocca un evento per vedere le sue foto e i video.</span><span data-fr>Touche un événement pour voir ses photos et ses vidéos.</span></p></div>
+  <div id="past"><div class="skel" style="height:240px"></div></div>
+</div></section>
+</main>
+<footer id="foot" class="foot"></footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script src="assets/app.js?v=1"></script>
+<script src="assets/pages.js?v=2"></script>
+<script>DTF.page.eventi();</script>
+</body>
+</html>

@@ -1,10 +1,10 @@
 {
   "name": "Dahira Touba Fano",
-  "short_name": "Dahira Touba Fano",
+  "short_name": "Touba Fano",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#0b3d2e",
+  "background_color": "#0e2a14",
+  "theme_color": "#0e2a14",
   "icons": [
     {
       "src": "favicon.png",
