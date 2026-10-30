@@ -82,6 +82,8 @@ section.block{padding-block:clamp(3.5rem,8vw,6.5rem)}
 .lang button[aria-pressed="true"]{background:var(--gold);color:var(--green)}
 .menu-btn{display:none;margin-left:auto;background:none;border:1px solid rgba(201,168,76,.5);color:var(--gold2);font-weight:600;font-size:.82rem;padding:.55rem .85rem;min-height:42px;cursor:pointer}
 @media (max-width:1020px){
+  /* niente sfocatura qui: farebbe "rimpicciolire" il menu a tendina sul telefono */
+  .top{background:var(--green);backdrop-filter:none;-webkit-backdrop-filter:none}
   .menu-btn{display:block}
   .top .lang{margin-left:.4rem}
   .nav{position:fixed;left:0;right:0;top:calc(var(--head) + env(safe-area-inset-top,0px));bottom:0;flex-direction:column;align-items:stretch;background:var(--green);padding:.6rem var(--gr) 2rem var(--gl);overflow-y:auto;display:none;gap:0}
