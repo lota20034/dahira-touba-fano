@@ -3,3 +3,9 @@
 
 [functions]
   directory = "netlify/functions"
+
+# Le foto del sito cambiano raramente: il browser le tiene in memoria 30 giorni
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
