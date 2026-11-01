@@ -101,8 +101,19 @@ details.sec > div{padding:0 1rem 1rem;display:grid;gap:1rem}
     <p class="hint" style="text-align:center">Dahira Touba Fano · Keur Serigne Touba Fano</p>
     <label class="f">Email<input id="lEmail" type="email" autocomplete="username" required></label>
     <label class="f">Password<input id="lPass" type="password" autocomplete="current-password" required></label>
+    <label class="check" style="min-height:32px;font-weight:500"><input type="checkbox" id="lShow" style="width:18px;height:18px"> Mostra la password</label>
     <button class="b gold" type="submit">Entra</button>
+    <button class="b line" type="button" id="lForgot">Password dimenticata?</button>
     <div id="lMsg"></div>
+  </form>
+  <form class="box" id="newPassForm" hidden>
+    <img src="img/logo-192.webp" alt="">
+    <h1>Nuova password</h1>
+    <p class="hint" style="text-align:center">Scegli una password nuova per l'area riservata (almeno 8 caratteri) e salvala nel portachiavi del telefono.</p>
+    <label class="f">Nuova password<input id="np1" type="password" autocomplete="new-password" minlength="8" required></label>
+    <label class="f">Ripeti la password<input id="np2" type="password" autocomplete="new-password" minlength="8" required></label>
+    <button class="b gold" type="submit">Salva e entra</button>
+    <div id="npMsg"></div>
   </form>
 </div>
 
@@ -128,6 +139,6 @@ details.sec > div{padding:0 1rem 1rem;display:grid;gap:1rem}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 <script src="assets/app.js?v=2"></script>
 <script src="assets/yobalou.js?v=3"></script>
-<script src="assets/admin.js?v=4"></script>
+<script src="assets/admin.js?v=5"></script>
 </body>
 </html>

@@ -92,7 +92,7 @@ function start() {
     sb.rpc('is_admin').then(function (a) {
       if (!a.data) { sb.auth.signOut(); return showLogin('Questo account non ha i permessi di admin.'); }
       $('loginView').hidden = true; $('appView').hidden = false;
-      loadAll().then(function () { renderAll(); openTab(location.hash.slice(1) || 'eventi'); }).catch(function (e) { fail(qs('[data-panel="eventi"]'), e); });
+      loadAll().then(function () { renderAll(); openTab(/^[a-z]+$/.test(location.hash.slice(1)) ? location.hash.slice(1) : 'eventi'); }).catch(function (e) { fail(qs('[data-panel="eventi"]'), e); });
     });
   });
 }
@@ -104,6 +104,34 @@ $('loginForm').addEventListener('submit', function (e) {
   });
 });
 $('logout').onclick = function () { sb.auth.signOut().then(function () { showLogin(); }); };
+
+// password dimenticata: Supabase manda un'email con un link che riporta qui per sceglierne una nuova
+var RECOVERY = /type=recovery/.test(location.hash + location.search);
+$('lShow').onchange = function () { $('lPass').type = this.checked ? 'text' : 'password'; };
+$('lForgot').onclick = function () {
+  var email = val('lEmail');
+  if (!email) return msg($('lMsg'), 'Scrivi prima la tua email qui sopra, poi tocca di nuovo “Password dimenticata?”.', 'err');
+  var btn = this; btn.disabled = true; msg($('lMsg'), 'Invio in corso…');
+  sb.auth.resetPasswordForEmail(email, {redirectTo: location.origin + '/admin.html'}).then(function (r) {
+    btn.disabled = false;
+    if (r.error) return msg($('lMsg'), 'Non riesco a mandare l\'email: ' + esc(r.error.message) + (/rate|seconds/i.test(r.error.message) ? ' (aspetta un minuto e riprova)' : ''), 'err');
+    msg($('lMsg'), 'Fatto: se l\'email è quella giusta ti arriva un messaggio da Supabase con il link per scegliere la nuova password. Guarda anche nello spam.', 'ok');
+  });
+};
+function showNewPass() { $('appView').hidden = true; $('loginView').hidden = false; $('loginForm').hidden = true; $('newPassForm').hidden = false; }
+sb.auth.onAuthStateChange(function (ev) { if (ev === 'PASSWORD_RECOVERY') { RECOVERY = true; showNewPass(); } });
+$('newPassForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+  var a = $('np1').value, b = $('np2').value;
+  if (a.length < 8) return msg($('npMsg'), 'Almeno 8 caratteri.', 'err');
+  if (a !== b) return msg($('npMsg'), 'Le due password non sono uguali.', 'err');
+  msg($('npMsg'), 'Salvataggio…');
+  sb.auth.updateUser({password: a}).then(function (r) {
+    if (r.error) return msg($('npMsg'), 'Non salvata: ' + esc(r.error.message) + '. Se il link è scaduto, richiedine uno nuovo.', 'err');
+    RECOVERY = false; history.replaceState(null, '', location.pathname);
+    $('newPassForm').hidden = true; $('loginForm').hidden = false; start();
+  });
+});
 
 /* ---------------- Schede ---------------- */
 function openTab(name) {
@@ -440,5 +468,5 @@ function renderSettings() {
   $('saveLinks').onclick = function () { var v = {}; qsa('[data-l]', p).forEach(function (i) { v[i.dataset.l] = i.value.trim(); }); saveSetting('links', v, $('lnMsg')); };
 }
 
-start();
+if (RECOVERY) showNewPass(); else start();
 })();
